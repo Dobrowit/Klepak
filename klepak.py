@@ -20,7 +20,7 @@ app = Flask(__name__)
 if not os.path.exists('logs'):
     os.mkdir('logs')
 
-file_handler = RotatingFileHandler('logs/klepak.log', maxBytes=10240, backupCount=10)
+file_handler = RotatingFileHandler('logs/klepak.log', maxBytes=102400, backupCount=10)
 file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
 file_handler.setLevel(logging.INFO)
 app.logger.addHandler(file_handler)
@@ -33,7 +33,6 @@ def log_request_info():
     app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
 
 # Blokowanie wejść spoza Polski
-app.logger.info(f"Ładuję bazę GeoIP...")
 GEOIP_DATABASE = 'geo/GeoLite2-Country.mmdb'  # Ścieżka do pliku bazy danych GeoIP
 
 if not os.path.exists(GEOIP_DATABASE):
