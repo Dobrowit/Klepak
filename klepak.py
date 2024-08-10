@@ -224,7 +224,7 @@ def upload():
 @app.route('/data', methods=['GET'])
 def get_data():
     entry_id = request.args.get('id')
-    data = load_data(DATA_FILE))
+    data = load_data(DATA_FILE)
 
     if entry_id:
         data = [entry for entry in data if entry['id'] == entry_id]
@@ -235,7 +235,6 @@ def get_data():
 
     return jsonify(data), 200
 
-# Wizualizacja danych na mapie
 @app.route('/map', methods=['GET'])
 def map_view():
     entry_id = request.args.get('id')
