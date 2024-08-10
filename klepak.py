@@ -1,4 +1,3 @@
-from flask import Flask, request, jsonify, render_template_string
 import uuid
 import base64
 import os
@@ -6,11 +5,15 @@ import json
 import folium
 import pandas as pd
 import logging
-from logging.handlers import RotatingFileHandler
-import geoip2.database
-from werkzeug.exceptions import Forbidden
 import time
+import io
+import geoip2.database
+from flask import Flask, request, jsonify, render_template_string
+from logging.handlers import RotatingFileHandler
+from werkzeug.exceptions import Forbidden
+from PIL import Image
 
+MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
 EXEMPT_IPS = ['127.0.0.1']
 START_TIME = time.time()
 IP_BLOCKS = 0
@@ -56,6 +59,15 @@ def save_data(data):
 def get_uptime():
     return time.time() - START_TIME
 
+# Walidacja wsp. geo.
+def validate_lat_long(lat, long):
+    try:
+        lat = float(lat)
+        long = float(long)
+    except ValueError:
+        return False
+    return -90 <= lat <= 90 and -180 <= long <= 180
+
 # Logowanie adresów IP
 @app.before_request
 def log_request_info():
@@ -64,6 +76,8 @@ def log_request_info():
 # Blokowanie wejść spoza Polski
 @app.before_request
 def block_non_polish_ips():
+    global IP_BLOCKS, IP_BLOCKS_UNKNOWN
+
     if request.remote_addr in EXEMPT_IPS:
         app.logger.info(f"Adres IP: {request.remote_addr} znajduje się na liście wyjątków, dostęp przyznany.")
         return  # Przejdź dalej bez blokowania
@@ -71,9 +85,11 @@ def block_non_polish_ips():
         response = geoip_reader.country(request.remote_addr)
         if response.country.iso_code != 'PL':
             app.logger.warning(f"Blokowane połączenie z adresu IP: {request.remote_addr} (kraj: {response.country.iso_code})")
+            IP_BLOCKS += 1
             raise Forbidden(description="Dostęp zabroniony: połączenia spoza Polski są blokowane.")
     except geoip2.errors.AddressNotFoundError:
         app.logger.warning(f"Nieznany adres IP: {request.remote_addr}. Blokowanie połączenia.")
+        IP_BLOCKS_UNKNOWN += 1
         raise Forbidden(description="Dostęp zabroniony: nieznany adres IP.")
 
 @app.route('/status', methods=['GET'])
@@ -116,6 +132,9 @@ def upload():
     latitude = content.get('latitude')
     longitude = content.get('longitude')
 
+    if not validate_lat_long(latitude, longitude):
+        return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne.'}), 400
+
     if not all([data, opis, zdjecie_base64, latitude, longitude]):
         return jsonify({'error': 'Brakuje data, opis, zdjecie, latitude lub longitude'}), 400
 
@@ -131,8 +150,11 @@ def upload():
         entry_id = str(uuid.uuid4())
 
     # Dekodowanie i zapisywanie zdjęcia
+
     try:
         zdjecie_bytes = base64.b64decode(zdjecie_base64)
+        if len(zdjecie_bytes) > MAX_IMAGE_SIZE:
+            return jsonify({'error': 'Plik jest za duży, maksymalny rozmiar to 5 MB.'}), 400
     except base64.binascii.Error:
         return jsonify({'error': 'Błędne dane base64'}), 400
 
