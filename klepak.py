@@ -11,9 +11,18 @@ import geoip2.database
 from werkzeug.exceptions import Forbidden
 import time
 
-start_time = time.time()
-ip_blocks = 0
-ip_blocks_unknown = 0
+EXEMPT_IPS = ['127.0.0.1']
+START_TIME = time.time()
+IP_BLOCKS = 0
+IP_BLOCKS_UNKNOWN = 0
+GEOIP_DATABASE = 'geo/GeoLite2-Country.mmdb'  # Ścieżka do pliku bazy danych GeoIP
+DATA_DIR = 'data' # Katalog do przechowywania danych
+DATA_FILE = os.path.join(DATA_DIR, 'data.json') # Plik do przechowywania danych
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+if not os.path.exists(GEOIP_DATABASE):
+    raise FileNotFoundError("Brak pliku bazy danych GeoIP. Upewnij się, że plik GeoLite2-Country.mmdb jest dostępny.")
+
 app = Flask(__name__)
 
 # Dziennik
@@ -27,40 +36,9 @@ app.logger.addHandler(file_handler)
 app.logger.setLevel(logging.INFO)
 app.logger.info('Klepak startup')
 
-# Logowanie adresów IP
-@app.before_request
-def log_request_info():
-    app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
-
-# Blokowanie wejść spoza Polski
-GEOIP_DATABASE = 'geo/GeoLite2-Country.mmdb'  # Ścieżka do pliku bazy danych GeoIP
-
-if not os.path.exists(GEOIP_DATABASE):
-    raise FileNotFoundError("Brak pliku bazy danych GeoIP. Upewnij się, że plik GeoLite2-Country.mmdb jest dostępny.")
-
+# Ładowanie bazy GeoIP
 geoip_reader = geoip2.database.Reader(GEOIP_DATABASE)
 app.logger.info(f"Baza GeoIP załadowana")
-
-@app.before_request
-def block_non_polish_ips():
-    try:
-        response = geoip_reader.country(request.remote_addr)
-        if response.country.iso_code != 'PL':
-            app.logger.warning(f"Blokowane połączenie z adresu IP: {request.remote_addr} (kraj: {response.country.iso_code})")
-            ip_blocks = ip_blocks + 1
-            raise Forbidden(description="Dostęp zabroniony: połączenia spoza Polski są blokowane.")
-    except geoip2.errors.AddressNotFoundError:
-        app.logger.warning(f"Nieznany adres IP: {request.remote_addr}. Blokowanie połączenia.")
-        ip_blocks_unknown = ip_blocks_unknown + 1
-        raise Forbidden(description="Dostęp zabroniony: nieznany adres IP.")
-
-# Katalog do przechowywania danych
-DATA_DIR = 'data'
-if not os.path.exists(DATA_DIR):
-    os.makedirs(DATA_DIR)
-
-# Plik do przechowywania danych
-DATA_FILE = os.path.join(DATA_DIR, 'data.json')
 
 # Funkcja pomocnicza do wczytywania danych z pliku
 def load_data():
@@ -76,7 +54,27 @@ def save_data(data):
 
 # Uptime serwera i informacje do statusu
 def get_uptime():
-    return time.time() - start_time
+    return time.time() - START_TIME
+
+# Logowanie adresów IP
+@app.before_request
+def log_request_info():
+    app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
+
+# Blokowanie wejść spoza Polski
+@app.before_request
+def block_non_polish_ips():
+    if request.remote_addr in EXEMPT_IPS:
+        app.logger.info(f"Adres IP: {request.remote_addr} znajduje się na liście wyjątków, dostęp przyznany.")
+        return  # Przejdź dalej bez blokowania
+    try:
+        response = geoip_reader.country(request.remote_addr)
+        if response.country.iso_code != 'PL':
+            app.logger.warning(f"Blokowane połączenie z adresu IP: {request.remote_addr} (kraj: {response.country.iso_code})")
+            raise Forbidden(description="Dostęp zabroniony: połączenia spoza Polski są blokowane.")
+    except geoip2.errors.AddressNotFoundError:
+        app.logger.warning(f"Nieznany adres IP: {request.remote_addr}. Blokowanie połączenia.")
+        raise Forbidden(description="Dostęp zabroniony: nieznany adres IP.")
 
 @app.route('/status', methods=['GET'])
 def status():
@@ -100,8 +98,8 @@ def status():
         'data_file_size': data_file_size,
         'images_files_size': images_size,
         'total_size_mb': total_size_mb,
-        'ip_blocks': ip_blocks,
-        'ip_blocks_unknown': ip_blocks_unknown,
+        'ip_blocks': IP_BLOCKS,
+        'ip_blocks_unknown': IP_BLOCKS_UNKNOWN,
         'uptime': uptime_str
     }
 
