@@ -240,62 +240,12 @@ def table_view():
     data = load_data()
     df = pd.DataFrame(data)
     table_html = df.to_html(classes='table table-striped', index=False)
-    return render_template_string("""
-        <html>
-        <head>
-            <title>Zestawienie zgłoszeń</title>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        </head>
-        <body>
-            {{ table_html|safe }}
-        </body>
-        </html>
-    """, table_html=table_html)
+    return render_template('table.html', table_html=table_html)
 
 # Pomoc i opis do API REST
 @app.route('/help', methods=['GET'])
 def help_view():
-    help_text = """
-    <html>
-    <head>
-        <title>Pomoc API</title>
-    </head>
-    <body>
-        <h1>Pomoc API</h1>
-        <h2>Endpoint: /upload</h2>
-        <p>Metoda: POST</p>
-        <p>Opis: Endpoint służy do przesyłania danych wraz z obrazem. Dane są zapisywane na serwerze.</p>
-        <p>Body (JSON):</p>
-        <pre>{
-    "data": "2021-08-06",
-    "opis": "Opis zdjęcia",
-    "zdjecie": "base64kodowanyObraz",
-    "latitude": 54.7578,
-    "longitude": 17.5610
-}</pre>
-        <p>Odpowiedź:</p>
-        <pre>{
-    "message": "Dane zapisane pomyślnie"
-}</pre>
-
-        <h2>Endpoint: /data</h2>
-        <p>Metoda: GET</p>
-        <p>Opis: Endpoint zwraca wszystkie zapisane dane w formacie JSON.</p>
-        <p>Odpowiedź:</p>
-        <pre>[
-    {
-        "data": "2021-08-06",
-        "opis": "Opis zdjęcia",
-        "zdjecie": "data/2021-08-06.jpg",
-        "latitude": 54.7578,
-        "longitude": 17.5610
-    },
-    ...
-]</pre>
-    </body>
-    </html>
-    """
-    return render_template_string(help_text)
+    return render_template('help.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=20162)

@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Pomoc API</title>
+    </head>
+    <body>
+        <h1>Pomoc API</h1>
+        <h2>Endpoint: /upload</h2>
+        <p>Metoda: POST</p>
+        <p>Opis: Endpoint służy do przesyłania danych wraz z obrazem. Dane są zapisywane na serwerze.</p>
+        <p>Body (JSON):</p>
+        <pre>{
+    "data": "2021-08-06",
+    "opis": "Opis zdjęcia",
+    "zdjecie": "base64kodowanyObraz",
+    "latitude": 54.7578,
+    "longitude": 17.5610
+}</pre>
+        <p>Odpowiedź:</p>
+        <pre>{
+    "message": "Dane zapisane pomyślnie"
+}</pre>
+
+        <h2>Endpoint: /data</h2>
+        <p>Metoda: GET</p>
+        <p>Opis: Endpoint zwraca wszystkie zapisane dane w formacie JSON.</p>
+        <p>Odpowiedź:</p>
+        <pre>[
+    {
+        "data": "2021-08-06",
+        "opis": "Opis zdjęcia",
+        "zdjecie": "data/2021-08-06.jpg",
+        "latitude": 54.7578,
+        "longitude": 17.5610
+    },
+    ...
+]</pre>
+    </body>
+</html>
