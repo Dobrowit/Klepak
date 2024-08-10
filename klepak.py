@@ -8,7 +8,7 @@ import logging
 import time
 import io
 import geoip2.database
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template_string, render_template
 from logging.handlers import RotatingFileHandler
 from werkzeug.exceptions import Forbidden
 from PIL import Image
@@ -18,8 +18,10 @@ EXEMPT_IPS = ['127.0.0.1']
 START_TIME = time.time()
 IP_BLOCKS = 0
 IP_BLOCKS_UNKNOWN = 0
+ENTRY_COUNTER = 0
 GEOIP_DATABASE = 'geo/GeoLite2-Country.mmdb'  # Ścieżka do pliku bazy danych GeoIP
 DATA_DIR = 'data' # Katalog do przechowywania danych
+USERS_FILE = os.path.join(DATA_DIR, 'users.json') # Plik do przechowywania danych użytkowników
 DATA_FILE = os.path.join(DATA_DIR, 'data.json') # Plik do przechowywania danych
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
@@ -44,9 +46,9 @@ geoip_reader = geoip2.database.Reader(GEOIP_DATABASE)
 app.logger.info(f"Baza GeoIP załadowana")
 
 # Funkcja pomocnicza do wczytywania danych z pliku
-def load_data():
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, 'r') as file:
+def load_data(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
             return json.load(file)
     return []
 
@@ -71,6 +73,8 @@ def validate_lat_long(lat, long):
 # Logowanie adresów IP
 @app.before_request
 def log_request_info():
+    global ENTRY_COUNTER
+    ENTRY_COUNTER += 1
     app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
 
 # Blokowanie wejść spoza Polski
@@ -94,7 +98,7 @@ def block_non_polish_ips():
 
 @app.route('/status', methods=['GET'])
 def status():
-    data = load_data()
+    data = load_data(DATA_FILE)
     num_entries = len(data)
     num_images = len([name for name in os.listdir(DATA_DIR) if name.endswith('.jpg') and os.path.isfile(os.path.join(DATA_DIR, name))])
 
@@ -116,16 +120,48 @@ def status():
         'total_size_mb': total_size_mb,
         'ip_blocks': IP_BLOCKS,
         'ip_blocks_unknown': IP_BLOCKS_UNKNOWN,
+        'entry_counter': ENTRY_COUNTER,
         'uptime': uptime_str
     }
 
     return jsonify(status_info), 200
 
+# Rejestracja użytkownika
+@app.route('/register', methods=['POST'])
+def register():
+    content = request.json
+    imie = content.get('imie')
+    nazwisko = content.get('nazwisko')
+    email = content.get('email')
+    imei = content.get('imei')
+
+    if not all([imie, nazwisko, email, imei]):
+        return jsonify({'error': 'Brakuje jednego z wymaganych pól: imie, nazwisko, email, imei'}), 400
+
+    user_id = str(uuid.uuid4())
+    timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+
+    new_user = {
+        'id': user_id,
+        'imie': imie,
+        'nazwisko': nazwisko,
+        'email': email,
+        'imei': imei,
+        'data': timestamp
+    }
+
+    # Wczytanie dotychczasowych danych użytkowników
+    users = load_data(USERS_FILE)
+    users.append(new_user)
+    save_data(USERS_FILE, users)
+
+    return jsonify({'message': 'Użytkownik zarejestrowany pomyślnie', 'id': user_id}), 201
+
 # Wczytywanie wysłanych danych
 @app.route('/upload', methods=['POST'])
 def upload():
     content = request.json
-    entry_id = content.get('id')
+    user_id = content.get('id')
     data = content.get('data')
     opis = content.get('opis')
     zdjecie_base64 = content.get('zdjecie')
@@ -138,16 +174,23 @@ def upload():
     if not all([data, opis, zdjecie_base64, latitude, longitude]):
         return jsonify({'error': 'Brakuje data, opis, zdjecie, latitude lub longitude'}), 400
 
-    # Wczytanie dotychczasowych danych
-    existing_data = load_data()
+    # Wczytanie dotychczasowych danych użytkowników
+    users = load_data(USERS_FILE)
 
-    if entry_id:
+    # Sprawdzenie, czy ID jest zarejestrowane
+    if not any(user['id'] == user_id for user in users):
+        return jsonify({'error': 'Błędny ID. Użytkownik niezarejestrowany.'}), 400
+
+    # Wczytanie dotychczasowych danych
+    existing_data = load_data(DATA_FILE)
+
+    if user_id:
         # Sprawdzanie czy ID istnieje
-        if not any(entry['id'] == entry_id for entry in existing_data):
+        if not any(entry['id'] == user_id for entry in existing_data):
             return jsonify({'error': 'Błędny ID. Należy wysłać pierwszą wiadomość bez ID, aby otrzymać nowy ID.'}), 400
     else:
         # Generowanie nowego ID
-        entry_id = str(uuid.uuid4())
+        user_id = str(uuid.uuid4())
 
     # Dekodowanie i zapisywanie zdjęcia
 
@@ -164,7 +207,7 @@ def upload():
 
     # Dodanie nowych danych
     new_entry = {
-        'id': entry_id,
+        'id': user_id,
         'data': data,
         'opis': opis,
         'zdjecie': zdjecie_filename,
@@ -175,13 +218,13 @@ def upload():
     existing_data.append(new_entry)
     save_data(existing_data)
 
-    return jsonify({'message': 'Dane zapisane pomyślnie', 'id': entry_id}), 200
+    return jsonify({'message': 'Dane zapisane pomyślnie', 'id': user_id}), 200
 
 # Pobieranie zapisanych danych
 @app.route('/data', methods=['GET'])
 def get_data():
     entry_id = request.args.get('id')
-    data = load_data()
+    data = load_data(DATA_FILE))
 
     if entry_id:
         data = [entry for entry in data if entry['id'] == entry_id]
@@ -196,7 +239,7 @@ def get_data():
 @app.route('/map', methods=['GET'])
 def map_view():
     entry_id = request.args.get('id')
-    data = load_data()
+    data = load_data(DATA_FILE)
 
     if entry_id:
         data = [entry for entry in data if entry['id'] == entry_id]
@@ -237,7 +280,7 @@ def map_view():
 # Podgląd danych
 @app.route('/table', methods=['GET'])
 def table_view():
-    data = load_data()
+    data = load_data(DATA_FILE)
     df = pd.DataFrame(data)
     table_html = df.to_html(classes='table table-striped', index=False)
     return render_template('table.html', table_html=table_html)
