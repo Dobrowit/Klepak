@@ -8,7 +8,7 @@ import logging
 import time
 import io
 import geoip2.database
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template_string, render_template
 from logging.handlers import RotatingFileHandler
 from werkzeug.exceptions import Forbidden
 from PIL import Image
