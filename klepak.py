@@ -7,10 +7,12 @@ import pandas as pd
 import logging
 import time
 import io
+import re
 import geoip2.database
 from flask import Flask, request, jsonify, render_template_string, render_template
 from logging.handlers import RotatingFileHandler
 from werkzeug.exceptions import Forbidden
+from werkzeug.utils import secure_filename
 from PIL import Image
 
 MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
@@ -70,6 +72,15 @@ def validate_lat_long(lat, long):
     except ValueError:
         return False
     return -90 <= lat <= 90 and -180 <= long <= 180
+
+# Walidacja eMail
+def validate_email(email):
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    return re.match(pattern, email) is not None
+
+# Walidacja kom.
+def validate_phone(phone):
+    return phone.isdigit() and len(phone) == 9
 
 # Logowanie adresów IP
 @app.before_request
@@ -134,11 +145,30 @@ def register():
     imie = content.get('imie')
     nazwisko = content.get('nazwisko')
     email = content.get('email')
-    imei = content.get('imei')
+    phone = content.get('phone')
 
-    if not all([email, imei]):
-        return jsonify({'error': 'Brakuje jednego z wymaganych pól: email, imei'}), 400
+    if not all([email, phone]):
+        return jsonify({'error': 'Brakuje jednego z wymaganych pól: email, nr tel.'}), 400
 
+    # Walidacja formatu email i numeru telefonu
+    if not validate_email(email):
+        return jsonify({'error': 'Niepoprawny format adresu email'}), 400
+    if not validate_phone(phone):
+        return jsonify({'error': 'Niepoprawny format numeru telefonu (wymagane 9 cyfr)'}), 400
+
+    # Wczytanie dotychczasowych danych użytkowników
+    try:
+        users = load_data(USERS_FILE)
+    except IOError as e:
+        app.logger.error(f"Błąd przy wczytywaniu danych użytkowników: {str(e)}")
+        return jsonify({'error': 'Błąd serwera przy rejestracji'}), 500
+    
+    # Sprawdzenie unikalności email i numeru telefonu
+    if any(user['email'] == email for user in users):
+        return jsonify({'error': 'Email jest już zarejestrowany'}), 400
+    if any(user['phone'] == phone for user in users):
+        return jsonify({'error': 'Numer telefonu jest już zarejestrowany'}), 400
+    
     user_id = str(uuid.uuid4())
     timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -147,15 +177,18 @@ def register():
         'imie': imie,
         'nazwisko': nazwisko,
         'email': email,
-        'imei': imei,
+        'phone': phone,
         'data': timestamp
     }
 
-    # Wczytanie dotychczasowych danych użytkowników
-    users = load_data(USERS_FILE)
     users.append(new_user)
-    save_data(USERS_FILE, users)
 
+    try:
+        save_data(USERS_FILE, users)
+    except IOError as e:
+        app.logger.error(f"Błąd przy zapisywaniu danych użytkowników: {str(e)}")
+        return jsonify({'error': 'Błąd serwera przy rejestracji'}), 500
+    
     return jsonify({'message': 'Użytkownik zarejestrowany pomyślnie', 'id': user_id}), 201
 
 # Wczytywanie wysłanych danych
@@ -169,22 +202,37 @@ def upload():
     latitude = content.get('latitude')
     longitude = content.get('longitude')
 
+    if not user_id:
+        return jsonify({'error': 'Brak ID użytkownika'}), 400
+    
     if not validate_lat_long(latitude, longitude):
         return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne.'}), 400
 
     if not all([data, opis, zdjecie_base64, latitude, longitude]):
         return jsonify({'error': 'Brakuje data, opis, zdjecie, latitude lub longitude'}), 400
 
+    # Limit długości opisu
+    if len(opis) > 5000:  # przykładowy limit 1000 znaków
+        return jsonify({'error': 'Opis jest zbyt długi (max 5000 znaków)'}), 400
+    
     # Wczytanie dotychczasowych danych użytkowników
-    users = load_data(USERS_FILE)
+    try:
+        users = load_data(USERS_FILE)
+    except IOError as e:
+        app.logger.error(f"Błąd przy wczytywaniu danych użytkowników: {str(e)}")
+        return jsonify({'error': 'Błąd serwera przy uploadzie'}), 500
 
     # Sprawdzenie, czy ID jest zarejestrowane
     if not any(user['id'] == user_id for user in users):
         return jsonify({'error': 'Błędny ID. Użytkownik niezarejestrowany.'}), 400
 
     # Wczytanie dotychczasowych danych
-    existing_data = load_data(DATA_FILE)
-
+    try:
+        existing_data = load_data(DATA_FILE)
+    except IOError as e:
+        app.logger.error(f"Błąd przy wczytywaniu istniejących danych: {str(e)}")
+        return jsonify({'error': 'Błąd serwera przy uploadzie'}), 500
+    
     # Dekodowanie i zapisywanie zdjęcia
     try:
         zdjecie_bytes = base64.b64decode(zdjecie_base64)
@@ -193,9 +241,17 @@ def upload():
     except base64.binascii.Error:
         return jsonify({'error': 'Błędne dane base64'}), 400
 
-    zdjecie_filename = os.path.join(DATA_DIR, f"{data.replace(':', '-')}.jpg")
-    with open(zdjecie_filename, 'wb') as zdjecie_file:
-        zdjecie_file.write(zdjecie_bytes)
+    # Generowanie unikalnej nazwy pliku
+    timestamp = int(time.time() * 1000)
+    zdjecie_filename = secure_filename(f"{timestamp}_{user_id}.jpg")
+    zdjecie_path = os.path.join(DATA_DIR, zdjecie_filename)
+
+    try:
+        with open(zdjecie_path, 'wb') as zdjecie_file:
+            zdjecie_file.write(zdjecie_bytes)
+    except IOError as e:
+        app.logger.error(f"Błąd przy zapisywaniu zdjęcia: {str(e)}")
+        return jsonify({'error': 'Błąd serwera przy zapisywaniu zdjęcia'}), 500
 
     # Dodanie nowych danych
     new_entry = {
@@ -208,7 +264,12 @@ def upload():
     }
 
     existing_data.append(new_entry)
-    save_data(existing_data)
+
+    try:
+        save_data(DATA_FILE, existing_data)
+    except IOError as e:
+        app.logger.error(f"Błąd przy zapisywaniu danych: {str(e)}")
+        return jsonify({'error': 'Błąd serwera przy zapisywaniu danych'}), 500
 
     return jsonify({'message': 'Dane zapisane pomyślnie', 'id': user_id}), 200
 
