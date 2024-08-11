@@ -296,16 +296,7 @@ def map_view():
     if entry_id:
         data = [entry for entry in data if entry['id'] == entry_id]
         if not data:
-            return render_template_string("""
-                <html>
-                <head>
-                    <title>Mapa zgłoszeń</title>
-                </head>
-                <body>
-                    <h1>Nie znaleziono danych dla podanego ID</h1>
-                </body>
-                </html>
-            """)
+            return render_template('map-error.html')
     else:
         data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
 
@@ -318,16 +309,7 @@ def map_view():
         ).add_to(map_)
 
     map_html = map_._repr_html_()
-    return render_template_string("""
-        <html>
-        <head>
-            <title>Mapa zgłoszeń</title>
-        </head>
-        <body>
-            {{ map_html|safe }}
-        </body>
-        </html>
-    """, map_html=map_html)
+    return render_template('map.html', map_html=map_html)
 
 # Podgląd danych
 @app.route('/table', methods=['GET'])
