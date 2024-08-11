@@ -5,5 +5,13 @@
         "zdjecie": "data/2024-08-06T14-00-00.jpg",
         "latitude": 52.2296756,
         "longitude": 21.0122287
+    },
+    {
+        "id": "240c311c-379b-49b1-b3b7-cbbdc1c69a2c",
+        "data": "2023-08-11 14:30:00",
+        "opis": "Przyk\u0142adowy opis zdj\u0119cia",
+        "zdjecie": "1723337019381_240c311c-379b-49b1-b3b7-cbbdc1c69a2c.jpg",
+        "latitude": 54.7578,
+        "longitude": 17.561
     }
 ]

@@ -16,7 +16,7 @@ from werkzeug.utils import secure_filename
 from PIL import Image
 
 MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
-EXEMPT_IPS = ['127.0.0.1']
+EXEMPT_IPS = ['127.0.0.1'] # Wyjątki od blokowania
 START_TIME = time.time()
 IP_BLOCKS = 0
 IP_BLOCKS_UNKNOWN = 0
@@ -25,17 +25,19 @@ GEOIP_DATABASE = 'geo/GeoLite2-Country.mmdb'  # Ścieżka do pliku bazy danych G
 DATA_DIR = 'data' # Katalog do przechowywania danych
 USERS_FILE = os.path.join(DATA_DIR, 'users.json') # Plik do przechowywania danych użytkowników
 DATA_FILE = os.path.join(DATA_DIR, 'data.json') # Plik do przechowywania danych
-if not os.path.exists(DATA_DIR):
-    os.makedirs(DATA_DIR)
-if not os.path.exists(GEOIP_DATABASE):
-    raise FileNotFoundError("Brak pliku bazy danych GeoIP. Upewnij się, że plik GeoLite2-Country.mmdb jest dostępny.")
 
 app = Flask(__name__)
 
-# Dziennik
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+
 if not os.path.exists('logs'):
     os.mkdir('logs')
 
+if not os.path.exists(GEOIP_DATABASE):
+    raise FileNotFoundError("Brak pliku bazy danych GeoIP. Upewnij się, że plik GeoLite2-Country.mmdb jest dostępny.")
+
+# Dziennik
 file_handler = RotatingFileHandler('logs/klepak.log', maxBytes=102400, backupCount=10)
 file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
 file_handler.setLevel(logging.INFO)
@@ -58,7 +60,6 @@ def load_data(file_path):
 def save_data(file_path, data):
     with open(file_path, 'w') as file:
         json.dump(data, file, indent=4)
-
 
 # Uptime serwera i informacje do statusu
 def get_uptime():
@@ -148,7 +149,7 @@ def register():
     phone = content.get('phone')
 
     if not all([email, phone]):
-        return jsonify({'error': 'Brakuje jednego z wymaganych pól: email, nr tel.'}), 400
+        return jsonify({'error': 'Brakuje jednego z wymaganych pól: email, phone'}), 400
 
     # Walidacja formatu email i numeru telefonu
     if not validate_email(email):
