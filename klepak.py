@@ -136,8 +136,8 @@ def register():
     email = content.get('email')
     imei = content.get('imei')
 
-    if not all([imie, nazwisko, email, imei]):
-        return jsonify({'error': 'Brakuje jednego z wymaganych pól: imie, nazwisko, email, imei'}), 400
+    if not all([email, imei]):
+        return jsonify({'error': 'Brakuje jednego z wymaganych pól: email, imei'}), 400
 
     user_id = str(uuid.uuid4())
     timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -185,16 +185,7 @@ def upload():
     # Wczytanie dotychczasowych danych
     existing_data = load_data(DATA_FILE)
 
-    if user_id:
-        # Sprawdzanie czy ID istnieje
-        if not any(entry['id'] == user_id for entry in existing_data):
-            return jsonify({'error': 'Błędny ID. Należy wysłać pierwszą wiadomość bez ID, aby otrzymać nowy ID.'}), 400
-    else:
-        # Generowanie nowego ID
-        user_id = str(uuid.uuid4())
-
     # Dekodowanie i zapisywanie zdjęcia
-
     try:
         zdjecie_bytes = base64.b64decode(zdjecie_base64)
         if len(zdjecie_bytes) > MAX_IMAGE_SIZE:
