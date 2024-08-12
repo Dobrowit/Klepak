@@ -14,6 +14,7 @@ def upload():
     zdjecie_base64 = content.get('zdjecie')
     latitude = content.get('latitude')
     longitude = content.get('longitude')
+    kategoria = content.get('kategoria')
 
     if not user_id:
         return jsonify({'error': 'Brak ID użytkownika'}), 400
@@ -21,8 +22,8 @@ def upload():
     if not validate_lat_long(latitude, longitude):
         return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne.'}), 400
 
-    if not all([data, opis, zdjecie_base64, latitude, longitude]):
-        return jsonify({'error': 'Brakuje data, opis, zdjecie, latitude lub longitude'}), 400
+    if not all([data, opis, zdjecie_base64, latitude, longitude, kategoria]):
+        return jsonify({'error': 'Brakuje data, opis, zdjecie, latitude, longitude lub kategoria'}), 400
 
     # Limit długości opisu
     if len(opis) > 5000:  # przykładowy limit 1000 znaków
@@ -73,7 +74,8 @@ def upload():
         'opis': opis,
         'zdjecie': zdjecie_filename,
         'latitude': latitude,
-        'longitude': longitude
+        'longitude': longitude,
+        'kategoria': kategoria
     }
 
     existing_data.append(new_entry)
