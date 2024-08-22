@@ -50,15 +50,12 @@ app.logger.info(f"Baza GeoIP załadowana")
 # Logowanie adresów IP
 @app.before_request
 def log_request_info():
-    #global entry_counter
     utils.entry_counter += 1
     app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
 
 # Blokowanie wejść spoza Polski
 @app.before_request
 def block_non_polish_ips():
-    global IP_BLOCKS, IP_BLOCKS_UNKNOWN
-
     if request.remote_addr in EXEMPT_IPS:
         app.logger.info(f"Adres IP: {request.remote_addr} znajduje się na liście wyjątków, dostęp przyznany.")
         return  # Przejdź dalej bez blokowania
@@ -66,11 +63,11 @@ def block_non_polish_ips():
         response = geoip_reader.country(request.remote_addr)
         if response.country.iso_code != 'PL':
             app.logger.warning(f"Blokowane połączenie z adresu IP: {request.remote_addr} (kraj: {response.country.iso_code})")
-            IP_BLOCKS += 1
+            utils.ip_blocks += 1
             raise Forbidden(description="Dostęp zabroniony: połączenia spoza Polski są blokowane.")
     except geoip2.errors.AddressNotFoundError:
         app.logger.warning(f"Nieznany adres IP: {request.remote_addr}. Blokowanie połączenia.")
-        IP_BLOCKS_UNKNOWN += 1
+        utils.ip_blocks_unknown += 1
         raise Forbidden(description="Dostęp zabroniony: nieznany adres IP.")
     
 if __name__ == '__main__':
