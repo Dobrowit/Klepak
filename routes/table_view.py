@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 import pandas as pd
-from utils import load_data
+from utils import load_data, DATA_FILE
 
 table_view_bp = Blueprint('table_view', __name__)
 

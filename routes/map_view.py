@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-from utils import load_data
+from flask import Blueprint, request, render_template
+from utils import load_data, DATA_FILE
 import folium
 
 map_view_bp = Blueprint('map_view', __name__)

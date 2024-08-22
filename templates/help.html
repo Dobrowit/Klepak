@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instrukcja API</title>
+    <title>help_view - Instrukcja API</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,60 +32,67 @@
 <body>
 
     <h1>Instrukcja API</h1>
-    <p>Witamy w instrukcji do API aplikacji Klepak. Poniżej znajdziesz szczegółowe informacje o dostępnych endpointach oraz przykładach użycia.</p>
 
-    <div class="endpoint">
-        <h2>1. Status serwera</h2>
-        <p><strong>Endpoint:</strong> <code>/status</code></p>
-        <p><strong>Metoda:</strong> GET</p>
-        <p>Ten endpoint zwraca informacje o stanie serwera, takie jak liczba wpisów, liczba zdjęć, rozmiar pliku danych, rozmiar plików zdjęć, liczba zablokowanych adresów IP (poza pulą PL i nieznane), licznik wejść oraz czas działania serwera (uptime).</p>
-        <div class="example">
-            <strong>Przykład odpowiedzi:</strong>
-            <pre>{
-    "num_entries": 10,
-    "num_images": 5,
-    "data_file_size": 0.1,
-    "images_files_size": 4.5,
-    "total_size_mb": 4.6,
-    "ip_blocks": 3,
-    "ip_blocks_unknown": 1,
-    "entry_counter": 122,
-    "uptime": "1h 23m 45s"
-}</pre>
-        </div>
-    </div>
+    <pre>
+    Lista endpointów
+    ================
+    endpoint  | rodzaj | zwraca
+    ----------+--------+-------
+    /register | POST   | json
+    /upload   | POST   | json
+    /data     | GET    | json
+    /status   | GET    | json
+    /map      | GET    | html
+    /table    | GET    | html
+    /help     | GET    | html
 
-    <div class="endpoint">
-        <h2>2. Wczytywanie danych</h2>
-        <p><strong>Endpoint:</strong> <code>/upload</code></p>
-        <p><strong>Metoda:</strong> POST</p>
-        <p>Ten endpoint umożliwia przesyłanie danych wraz ze zdjęciem. Wymagane pola to: <code>data</code>, <code>opis</code>, <code>zdjecie</code> (w formacie base64), <code>latitude</code>, <code>longitude</code>. Jeśli nie podano ID, zostanie wygenerowane nowe.</p>
-        <div class="example">
-            <strong>Przykład zapytania:</strong>
-            <pre>{
-    "data": "2024-08-11 00:00:00",
-    "opis": "Przykładowy opis",
-    "zdjecie": "base64string",
-    "latitude": "54.7578",
-    "longitude": "17.5610"
-}</pre>
-            <strong>Przykład odpowiedzi:</strong>
-            <pre>{
-    "message": "Dane zapisane pomyślnie",
-    "id": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-}</pre>
-        </div>
-    </div>
-
-    <div class="endpoint">
-        <h2>3. Pobieranie zapisanych danych</h2>
-        <p><strong>Endpoint:</strong> <code>/data</code></p>
-        <p><strong>Metoda:</strong> GET</p>
-        <p>Ten endpoint zwraca zapisane dane. Można opcjonalnie przekazać parametr <code>id</code>, aby otrzymać dane dla wpisów danego usera.</p>
-        <div class="example">
-            <strong>Przykład zapytania:</strong> <code>/data?id=d290f1ee-6c54-4b01-90e6-d701748f0851</code>
-            <br><strong>Przykład odpowiedzi:</strong>
-            <pre>[
+    Adres bazowy dla lokalnego swerwera:
+    http://localhost:20162
+    </pre>
+    <hr>
+    <pre>
+    /register | POST | json
+    =======================
+    ...in progress.
+    </pre>
+    <hr>
+    <pre>
+    Wczytywanie danych - /upload | POST | json
+    ==========================================
+    Ten endpoint umożliwia przesyłanie danych wraz ze zdjęciem. Wymagane pola to:
+        data
+        opis
+        zdjecie (w formacie base64)
+        latitude
+        longitude
+    
+    Jeśli nie podano ID, zostanie wygenerowane nowe.
+    
+    Przykład zapytania:
+    {
+        "data": "2024-08-11 00:00:00",
+        "opis": "Przykładowy opis",
+        "zdjecie": "base64string",
+        "latitude": "54.7578",
+        "longitude": "17.5610"
+    }
+    
+    Przykład odpowiedzi:
+    {
+        "message": "Dane zapisane pomyślnie",
+        "id": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+    }
+    
+    
+    Pobieranie zapisanych danych - /data | GET | json
+    Ten endpoint zwraca zapisane dane. Można opcjonalnie przekazać parametr id, aby otrzymać dane dla wpisów danego
+    usera.
+    
+    Przykład zapytania:
+    /data?id=d290f1ee-6c54-4b01-90e6-d701748f0851
+    
+    Przykład odpowiedzi:
+    [
     {
         "data": "2024-08-11 00:00:00",
         "opis": "Przykładowy opis",
@@ -93,36 +100,56 @@
         "latitude": "54.7578",
         "longitude": "17.5610"
     }
-]</pre>
-        </div>
-    </div>
+    ]
+    </pre>
+    <hr>
+    <pre>
+    /data | GET | json
+    ==================
+    ...in progress.
+    </pre>
+    <hr>
+    <pre>
+    Status serwera - /status | GET | json
+    =====================================
+    Ten endpoint zwraca informacje o stanie serwera, takie jak liczba wpisów, liczba zdjęć, rozmiar pliku danych,
+    rozmiar plików zdjęć, liczba zablokowanych adresów IP (poza pulą PL i nieznane), licznik wejść oraz czas działania
+    serwera (uptime).
+    
+    Przykład odpowiedzi:
+    {
+        "num_entries": 10,
+        "num_images": 5,
+        "data_file_size": 0.1,
+        "images_files_size": 4.5,
+        "total_size_mb": 4.6,
+        "ip_blocks": 3,
+        "ip_blocks_unknown": 1,
+        "entry_counter": 122,
+        "uptime": "1h 23m 45s"
+    }
+    </pre>
+    <hr>
+    <pre>    
+    Wizualizacja danych na mapie - /map | GET | html
+    ================================================
+    Ten endpoint generuje mapę z zaznaczonymi punktami na podstawie zapisanych danych. Można opcjonalnie przekazać
+    parametr id, aby wyświetlić dane dla konkretnego wpisu.
 
-    <div class="endpoint">
-        <h2>4. Wizualizacja danych na mapie</h2>
-        <p><strong>Endpoint:</strong> <code>/map</code></p>
-        <p><strong>Metoda:</strong> GET</p>
-        <p>Ten endpoint generuje mapę z zaznaczonymi punktami na podstawie zapisanych danych. Można opcjonalnie przekazać parametr <code>id</code>, aby wyświetlić dane dla konkretnego wpisu.</p>
-        <div class="example">
-            <strong>Przykład użycia:</strong> <code>/map?id=d290f1ee-6c54-4b01-90e6-d701748f0851</code>
-        </div>
-    </div>
-
-    <div class="endpoint">
-        <h2>5. Podgląd danych w tabeli</h2>
-        <p><strong>Endpoint:</strong> <code>/table</code></p>
-        <p><strong>Metoda:</strong> GET</p>
-        <p>Ten endpoint wyświetla zapisane dane w formie tabeli HTML.</p>
-        <div class="example">
-            <strong>Przykład odpowiedzi:</strong> HTML tabela z danymi.
-        </div>
-    </div>
-
-    <div class="endpoint">
-        <h2>6. Pomoc i opis do API</h2>
-        <p><strong>Endpoint:</strong> <code>/help</code></p>
-        <p><strong>Metoda:</strong> GET</p>
-        <p>Ten endpoint wyświetla niniejszą instrukcję obsługi API.</p>
-    </div>
-
+    Przykład zapytania:
+    /map?id=d290f1ee-6c54-4b01-90e6-d701748f0851
+    </pre>
+    <hr>
+    <pre>
+    Podgląd danych w tabeli - /table | GET | html
+    =============================================
+    Ten endpoint wyświetla zapisane dane w formie tabeli HTML.
+    </pre>
+    <hr>
+    <pre>
+    Pomoc i opis do API - /help |  GET | html
+    =========================================
+    Ten endpoint wyświetla niniejszy opis
+    </pre>
 </body>
 </html>

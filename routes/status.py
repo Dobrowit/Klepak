@@ -1,11 +1,14 @@
 from flask import Blueprint, jsonify
-from utils import load_data, get_uptime
+from utils import load_data, get_uptime, DATA_DIR, DATA_FILE
+import utils
 import os
 
 status_bp = Blueprint('status', __name__)
 
 @status_bp.route('/status', methods=['GET'])
 def status():
+    #global entry_counter
+    print("endpoint - status - entry_counter:", utils.entry_counter)
     data = load_data(DATA_FILE)
     num_entries = len(data)
     num_images = len([name for name in os.listdir(DATA_DIR) if name.endswith('.jpg') and os.path.isfile(os.path.join(DATA_DIR, name))])
@@ -26,9 +29,9 @@ def status():
         'data_file_size': data_file_size,
         'images_files_size': images_size,
         'total_size_mb': total_size_mb,
-        'ip_blocks': IP_BLOCKS,
-        'ip_blocks_unknown': IP_BLOCKS_UNKNOWN,
-        'entry_counter': ENTRY_COUNTER,
+        'ip_blocks': utils.ip_blocks,
+        'ip_blocks_unknown': utils.ip_blocks_unknown,
+        'entry_counter': utils.entry_counter,
         'uptime': uptime_str
     }
 

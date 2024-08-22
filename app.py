@@ -5,6 +5,9 @@ import geoip2.database
 from logging.handlers import RotatingFileHandler
 from werkzeug.exceptions import Forbidden
 from flask import Flask, request
+from utils import DATA_DIR, GEOIP_DATABASE, EXEMPT_IPS
+import utils
+
 from routes.status import status_bp
 from routes.register import register_bp
 from routes.upload import upload_bp
@@ -22,17 +25,6 @@ app.register_blueprint(data_bp)
 app.register_blueprint(map_view_bp)
 app.register_blueprint(table_view_bp)
 app.register_blueprint(help_view_bp)
-
-MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
-EXEMPT_IPS = ['127.0.0.1'] # Wyjątki od blokowania
-START_TIME = time.time()
-IP_BLOCKS = 0
-IP_BLOCKS_UNKNOWN = 0
-ENTRY_COUNTER = 0
-GEOIP_DATABASE = 'geo/GeoLite2-Country.mmdb'  # Ścieżka do pliku bazy danych GeoIP
-DATA_DIR = 'data' # Katalog do przechowywania danych
-USERS_FILE = os.path.join(DATA_DIR, 'users.json') # Plik do przechowywania danych użytkowników
-DATA_FILE = os.path.join(DATA_DIR, 'data.json') # Plik do przechowywania danych
 
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
@@ -58,8 +50,9 @@ app.logger.info(f"Baza GeoIP załadowana")
 # Logowanie adresów IP
 @app.before_request
 def log_request_info():
-    global ENTRY_COUNTER
-    ENTRY_COUNTER += 1
+    #global entry_counter
+    utils.entry_counter += 1
+    print(utils.entry_counter)
     app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
 
 # Blokowanie wejść spoza Polski

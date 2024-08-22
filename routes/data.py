@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from utils import load_data
+from utils import load_data, DATA_FILE
 
 data_bp = Blueprint('data', __name__)
 
