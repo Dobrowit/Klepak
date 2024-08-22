@@ -52,7 +52,6 @@ app.logger.info(f"Baza GeoIP załadowana")
 def log_request_info():
     #global entry_counter
     utils.entry_counter += 1
-    print(utils.entry_counter)
     app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
 
 # Blokowanie wejść spoza Polski
