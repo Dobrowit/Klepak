@@ -61,7 +61,7 @@ def block_non_polish_ips():
         return  # Przejdź dalej bez blokowania
     try:
         response = geoip_reader.country(request.remote_addr)
-        if response.country.iso_code != 'PL':
+        if response.country.iso_code not in ['PL', 'FI']:
             app.logger.warning(f"Blokowane połączenie z adresu IP: {request.remote_addr} (kraj: {response.country.iso_code})")
             utils.ip_blocks += 1
             raise Forbidden(description="Dostęp zabroniony: połączenia spoza Polski są blokowane.")
