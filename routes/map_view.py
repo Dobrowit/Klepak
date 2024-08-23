@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, url_for
 from utils import load_data, DATA_FILE
 import folium
 
@@ -18,9 +18,15 @@ def map_view():
 
     map_ = folium.Map(location=[54.7578, 17.5610], zoom_start=15)
     for entry in data:
+        popup_content = f"""
+<div>
+    <img src="{url_for('static', filename='data/' + entry['zdjecie'])}" style="max-width:100px; max-height:100px;">
+    <p>{entry['data']}: {entry['opis']}</p>
+</div>
+"""
         folium.Marker(
             location=[entry['latitude'], entry['longitude']],
-            popup=f"{entry['data']}: {entry['opis']}",
+            popup=folium.Popup(popup_content, max_width=300),
             tooltip=entry['opis']
         ).add_to(map_)
 
