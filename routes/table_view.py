@@ -11,7 +11,7 @@ def table_view():
     
     # Funkcja do tworzenia linku HTML
     def make_clickable(val):
-        return f'<a href="{url_for("static", filename="data/" + val)}" target="_blank">{val}</a>'
+        return f'<a href="{url_for("static", filename="photos/" + val)}" target="_blank">{val}</a>'
     
     # Zastosuj funkcję make_clickable do kolumny 'zdjecie'
     df['zdjecie'] = df['zdjecie'].apply(make_clickable)
