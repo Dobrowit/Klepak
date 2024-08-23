@@ -23,8 +23,8 @@ def upload():
     if not validate_lat_long(latitude, longitude):
         return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne.'}), 400
 
-    if not all([opis, zdjecie_base64, latitude, longitude, kategoria]):
-        return jsonify({'error': 'Brakuje opis, zdjecie, latitude, longitude lub kategoria'}), 400
+    if not all([zdjecie_base64, latitude, longitude, kategoria]):
+        return jsonify({'error': 'Brakuje zdjecie, latitude, longitude lub kategoria'}), 400
 
     # Limit długości opisu
     if len(opis) > 5000:  # przykładowy limit 1000 znaków

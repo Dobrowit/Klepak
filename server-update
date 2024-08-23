@@ -1,24 +1,28 @@
 #!/bin/bash
 
 TARGET_DIR="/srv/klepak"
+BACKUP_WORK_DIR="/srv"
+BACKUP_DIR="$BACKUP_WORK_DIR/backup"
 REPO_DIR="$TARGET_DIR/Klepak"
 REPO_URL="https://github.com/Dobrowit/Klepak/"
 
 echo "Zatrzymanie serwera klepak..."
 systemctl stop klepak
 
+tar --exclude="$TARGET_DIR/.venv" -czf $BACKUP_DIR/klepak_$(date +%Y%m%d_%H%M%S).tgz -C $BACKUP_WORK_DIR klepak
+echo "Backup utworzony: /srv/backup/klepak_$(date +%Y%m%d_%H%M%S).tgz"
+
 echo "Usuwanie plików i folderów z katalogu $TARGET_DIR, z wyjątkami..."
-find "$TARGET_DIR" -mindepth 1 \
-    -not -path "$TARGET_DIR/server-reinstall" \
-    -not -path "$TARGET_DIR/logs" \
-    -not -path "$TARGET_DIR/logs/*" \
-    -not -path "$TARGET_DIR/data" \
-    -not -path "$TARGET_DIR/data/*" \
-    -not -path "$TARGET_DIR/.venv" \
-    -not -path "$TARGET_DIR/.venv/*" \
-    -not -path "$TARGET_DIR/static/photos" \
-    -not -path "$TARGET_DIR/static/photos/*" \
-    -exec rm -rf {} +
+mkdir /tmp/empty_dir
+rsync -a --delete \
+    --exclude='/.venv' \
+    --exclude='/server-reinstall' \
+    --exclude='/logs' \
+    --exclude='/data' \
+    --exclude='/static' \
+    --exclude='/static/photos' \
+    /tmp/empty_dir/ "$TARGET_DIR/"
+rm -f -r /tmp/empty_dir
 
 echo "Klonowanie repozytorium z $REPO_URL do katalogu $REPO_DIR..."
 git clone "$REPO_URL" "$REPO_DIR"
