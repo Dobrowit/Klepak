@@ -5,6 +5,7 @@ EXEMPT_IPS = ['127.0.0.1'] # Wyjątki od blokowania
 START_TIME = time.time()
 GEOIP_DATABASE = 'geo/GeoLite2-Country.mmdb'  # Ścieżka do pliku bazy danych GeoIP
 DATA_DIR = 'data' # Katalog do przechowywania danych
+PHOTOS_DIR = 'static/photos' # Katalog do przechowywania zdjęć
 USERS_FILE = os.path.join(DATA_DIR, 'users.json') # Plik do przechowywania danych użytkowników
 DATA_FILE = os.path.join(DATA_DIR, 'data.json') # Plik do przechowywania danych
 

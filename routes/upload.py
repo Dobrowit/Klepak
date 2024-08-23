@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from utils import load_data, save_data, validate_lat_long, USERS_FILE, DATA_FILE, DATA_DIR, MAX_IMAGE_SIZE
+from utils import load_data, save_data, validate_lat_long, USERS_FILE, DATA_FILE, PHOTOS_DIR, MAX_IMAGE_SIZE
 import base64, os, time
 from werkzeug.utils import secure_filename
 import app
@@ -59,7 +59,7 @@ def upload():
     # Generowanie unikalnej nazwy pliku
     timestamp = int(time.time() * 1000)
     zdjecie_filename = secure_filename(f"{timestamp}_{user_id}.jpg")
-    zdjecie_path = os.path.join(DATA_DIR, zdjecie_filename)
+    zdjecie_path = os.path.join(PHOTOS_DIR, zdjecie_filename)
 
     try:
         with open(zdjecie_path, 'wb') as zdjecie_file:
