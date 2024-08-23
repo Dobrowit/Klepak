@@ -50,22 +50,34 @@ def validate_phone(phone):
     return phone.isdigit() and len(phone) == 9
 
 # Wczytaj plik KML
-def load_polygon_from_kml(kml_file_path):
-    with open(kml_file_path, 'rt', encoding='utf-8') as f:
+def load_polygon_from_kml():
+    with open("geo/gmina.kml", 'rb') as f:
         doc = f.read()
 
     k = kml.KML()
     k.from_string(doc)
 
-    # Zakładamy, że plik KML zawiera tylko jeden placemark z polygonem
-    # W razie potrzeby możesz dostosować tę część, aby obsłużyć wiele elementów
-    placemarks = list(k.features())
-    for placemark in placemarks:
-        for feature in placemark.features():
-            if isinstance(feature.geometry, Polygon):
-                return feature.geometry
+    try:
+        placemarks = list(k.features()) # Liczba placemarków: len(placemarks)
+
+        for placemark in placemarks:
+            features = list(placemark.features()) # Liczba funkcji w placemarku: len(features)
+
+            for feature in features:
+                geometry_type = type(feature.geometry) # Typ geometrii: geometry_type
+
+                if isinstance(feature.geometry, pygeoif.geometry.Polygon):
+                    # Znaleziono Polygon!
+                    # Konwersja pygeoif.geometry.Polygon na shapely.geometry.Polygon
+                    shapely_polygon = ShapelyPolygon(feature.geometry.exterior.coords)
+                    return shapely_polygon
+    except Exception as e:
+        print("Błąd podczas przetwarzania pliku KML:", str(e))
+
+    print("Nie znaleziono Polygonu.")
+    return None
 
 # Sprawdzanie czy pkt jest w obszarze gminy
 def is_point_in_polygon(latitude, longitude, polygon):
-    point = Point(longitude, latitude)  # Shapely używa formatu (longitude, latitude)
+    point = Point(longitude, latitude)
     return polygon.contains(point)

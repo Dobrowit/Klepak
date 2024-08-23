@@ -33,8 +33,7 @@ def upload():
         return jsonify({'error': 'Opis jest zbyt długi (max 5000 znaków)'}), 400
 
     # Sprawdzanie czy jest w strefie
-    kml_file_path = 'geo/gmina.kml'
-    polygon = load_polygon_from_kml(kml_file_path)
+    polygon = load_polygon_from_kml()
     latitude = content.get('Latitude')
     longitude = content.get('Longitude')
 
