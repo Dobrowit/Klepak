@@ -5,8 +5,8 @@ source server-config
 echo "Zatrzymanie serwera klepak..."
 systemctl stop klepak
 
-tar --exclude="$TARGET_DIR/.venv" -czfv $BACKUP_DIR/klepak_$(date +%Y%m%d_%H%M%S).tgz -C $BACKUP_WORK_DIR klepak
-echo "Backup utworzony: /srv/backup/klepak_mini_$(date +%Y%m%d_%H%M%S).tgz"
+#tar --exclude="$TARGET_DIR/.venv" -czf $BACKUP_DIR/klepak_$(date +%Y%m%d_%H%M%S).tgz -C $BACKUP_WORK_DIR klepak
+#echo "Backup utworzony: /srv/backup/klepak_mini_$(date +%Y%m%d_%H%M%S).tgz"
 
 echo "Usuwanie plików i folderów z katalogu $TARGET_DIR, z wyjątkami..."
 mkdir /tmp/empty_dir
