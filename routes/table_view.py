@@ -4,6 +4,7 @@ from utils import load_data, DATA_FILE
 
 table_view_bp = Blueprint('table_view', __name__)
 
+@table_view_bp.route('/table', methods=['GET'])
 def table_view():
     data = load_data(DATA_FILE)
     df = pd.DataFrame(data)
