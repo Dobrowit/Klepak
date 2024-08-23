@@ -1,0 +1,14 @@
+# Skopiować do /etc/systemd/system/klepak.service
+
+[Unit]
+Description=Serwer Klepak
+After=network.target
+
+[Service]
+User=dobrowit
+Group=dobrowit
+WorkingDirectory=/srv/klepak
+ExecStart=/srv/klepak/server-start
+
+[Install]
+WantedBy=multi-user.target

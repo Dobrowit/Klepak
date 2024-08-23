@@ -16,6 +16,16 @@ def upload():
     longitude = content.get('longitude')
     kategoria = content.get('kategoria')
 
+# Dopasować do schematu:
+# {
+#     "Id": "test id",
+#     "Base64Image": "image in base 64",
+#     "Category": 4,
+#     "Message": "massage",
+#     "Latitude": 1.0,
+#     "Longitude": 1.0
+# }
+
     if not user_id:
         return jsonify({'error': 'Brak ID użytkownika'}), 400
     

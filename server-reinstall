@@ -1,0 +1,29 @@
+#!/bin/bash
+
+TARGET_DIR="/srv/klepak"
+REPO_DIR="$TARGET_DIR/Klepak"
+REPO_URL="https://github.com/Dobrowit/Klepak/"
+EXCLUDE_FILE="$TARGET_DIR/server-reinstall"
+EXCLUDE_DIR="$TARGET_DIR/data"
+
+echo "Zatrzymanie serwera klepak..."
+systemctl stop klepak
+
+echo "Usuwanie plików i folderów z katalogu $TARGET_DIR, z wyjątkiem $EXCLUDE_FILE..."
+find "$TARGET_DIR" -mindepth 1 \
+    -not -path "$EXCLUDE_FILE" \
+    -not -path "$EXCLUDE_DIR" \
+    -not -path "$EXCLUDE_DIR/*" \
+    -exec rm -rf {} +
+
+echo "Klonowanie repozytorium z $REPO_URL do katalogu $REPO_DIR..."
+git clone "$REPO_URL" "$REPO_DIR"
+
+echo "Przenoszenie plików z katalogu $REPO_DIR do katalogu $TARGET_DIR..."
+mv "$REPO_DIR"/* "$TARGET_DIR/"
+
+echo "Usuwanie pustego katalogu $REPO_DIR i sprzątanie..."
+rmdir "$REPO_DIR"
+chmod +x "$TARGET_DIR\server-start"
+
+echo "Operacje zakończone pomyślnie."
