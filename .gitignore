@@ -6,3 +6,4 @@ logs/
 *.log
 *.log.*
 *.pyc
+.vscode/

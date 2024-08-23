@@ -46,3 +46,8 @@ echo "Operacje zakończone pomyślnie."
 
 echo "Uruchamianie serwera klepak..."
 systemctl start klepak
+
+echo -e "Aktualizacja serwera Klepak ukończona - `date +"%Y-%m-%d %H:%M:%S"`.\n\n\
+Sprawdź czy coś się nie popsuło:\n\n\
+http://maluch3.mikr.us:20162/status\n\n\
+https://klepak.cytr.us:20162/status" | pusher
