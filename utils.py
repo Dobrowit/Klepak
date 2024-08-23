@@ -1,6 +1,7 @@
 import json, os, time, re
-from shapely.geometry import Point, Polygon
+from shapely.geometry import Point, Polygon as ShapelyPolygon
 from fastkml import kml
+import pygeoif
 
 MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
 EXEMPT_IPS = ['127.0.0.1'] # Wyjątki od blokowania
