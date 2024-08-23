@@ -13,20 +13,6 @@
         h1, h2 {
             color: #333;
         }
-        code {
-            background-color: #f4f4f4;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-        .endpoint {
-            margin-bottom: 20px;
-        }
-        .example {
-            background-color: #f9f9f9;
-            border-left: 4px solid #ccc;
-            padding: 10px;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
@@ -53,7 +39,27 @@
     <pre>
     /register | POST | json
     =======================
-    ...in progress.
+    Rejestracja usera przy pierwszym uruchomieniu apki. User otrzymuje swój unikalny klucz, który zapisywany jest
+    do pamięci stałej apki. Sprawdzana jest unikalność email i phone.
+
+    Przykład zapytania:
+    {
+        "imie": "Test",
+        "nazwisko": "Test",
+        "email": "test@mail.com",
+        "phone": "123456789"
+    }
+
+    Przykład odpowiedzi:
+    {
+        "id": "9389f8dd-18f8-444a-8dd7-4c815f349a6f",
+        "message": "The user has been registered successfully."
+    }
+
+    w przypadku błedu (proces sprawdza czy email i nr tel. jest unikalny):
+    {
+        "error": "This email is already registered!"
+    }
     </pre>
     <hr>
     <pre>

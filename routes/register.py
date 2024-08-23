@@ -13,26 +13,26 @@ def register():
     phone = content.get('phone')
 
     if not all([email, phone]):
-        return jsonify({'error': 'Brakuje jednego z wymaganych pól: email, phone'}), 400
+        return jsonify({'error': 'Brakuje jednego z wymaganych pól: e-mail, numer telefonu!'}), 400
 
     # Walidacja formatu email i numeru telefonu
     if not validate_email(email):
-        return jsonify({'error': 'Niepoprawny format adresu email'}), 400
+        return jsonify({'error': 'Niepoprawny format adresu email!'}), 400
     if not validate_phone(phone):
-        return jsonify({'error': 'Niepoprawny format numeru telefonu (wymagane 9 cyfr)'}), 400
+        return jsonify({'error': 'Niepoprawny format numeru telefonu (wymagane 9 cyfr)!'}), 400
 
     # Wczytanie dotychczasowych danych użytkowników
     try:
         users = load_data(USERS_FILE)
     except IOError as e:
         app.logger.error(f"Błąd przy wczytywaniu danych użytkowników: {str(e)}")
-        return jsonify({'error': 'Błąd serwera przy rejestracji'}), 500
+        return jsonify({'error': 'Błąd serwera IO podczas rejestracji! Kod:01'}), 500
     
     # Sprawdzenie unikalności email i numeru telefonu
     if any(user['email'] == email for user in users):
-        return jsonify({'error': 'Email jest już zarejestrowany'}), 400
+        return jsonify({'error': 'Ten adres e-mail jest już zarejestrowany!'}), 400
     if any(user['phone'] == phone for user in users):
-        return jsonify({'error': 'Numer telefonu jest już zarejestrowany'}), 400
+        return jsonify({'error': 'Ten numer telefonu jest już zarejestrowany!'}), 400
     
     user_id = str(uuid.uuid4())
     timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -52,6 +52,6 @@ def register():
         save_data(USERS_FILE, users)
     except IOError as e:
         app.logger.error(f"Błąd przy zapisywaniu danych użytkowników: {str(e)}")
-        return jsonify({'error': 'Błąd serwera przy rejestracji'}), 500
+        return jsonify({'error': 'Błąd serwera IO podczas rejestracji! Kod:02'}), 500
     
-    return jsonify({'message': 'Użytkownik zarejestrowany pomyślnie', 'id': user_id}), 201
+    return jsonify({'message': 'Użytkownik został pomyślnie zarejestrowany.', 'id': user_id}), 201

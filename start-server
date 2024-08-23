@@ -1,2 +1,0 @@
-#cat /srv/klepak/logs/klepak.log | tail -n 50
-gunicorn --chdir /srv/klepak --workers 2 --preload --bind 0.0.0.0:20162 klepak:app

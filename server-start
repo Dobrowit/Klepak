@@ -1,0 +1,7 @@
+#!/bin/bash
+# Skrypt startowy dla serwera
+
+WORKERS=1
+
+source ./.venv/bin/activate
+gunicorn --chdir /srv/klepak --workers $WORKERS --preload --bind 0.0.0.0:20162 app:app
