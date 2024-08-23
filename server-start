@@ -1,5 +1,5 @@
 #!/bin/bash
 
-source server-backup
+source server-config
 source ./.venv/bin/activate
 gunicorn --chdir $TARGET_DIR --workers $WORKERS --preload --bind 0.0.0.0:20162 app:app

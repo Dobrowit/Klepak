@@ -37,9 +37,7 @@ rm -f -d -r "$REPO_DIR"
 
 echo "Ustawienie uprawnień do plików..."
 chown -R dobrowit:dobrowit "$TARGET_DIR"
-chmod +x "$TARGET_DIR/server-start"
-chmod +x "$TARGET_DIR/server-setup"
-chmod +x "$TARGET_DIR/server-update"
+chmod +x $TARGET_DIR/server-*
 
 echo "Operacje zakończone pomyślnie."
 
