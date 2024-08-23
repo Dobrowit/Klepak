@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, url_for
 from utils import load_data, DATA_FILE
 import folium
+from folium.plugins import MarkerCluster
 
 map_view_bp = Blueprint('map_view', __name__)
 
@@ -17,6 +18,8 @@ def map_view():
         data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
 
     map_ = folium.Map(location=[54.7578, 17.5610], zoom_start=15)
+    marker_cluster = MarkerCluster().add_to(map_)
+
     for entry in data:
         popup_content = f"""
 <div>
@@ -28,7 +31,7 @@ def map_view():
             location=[entry['latitude'], entry['longitude']],
             popup=folium.Popup(popup_content, max_width=300),
             tooltip=entry['opis']
-        ).add_to(map_)
+        ).add_to(marker_cluster)
 
     map_html = map_._repr_html_()
     return render_template('map.html', map_html=map_html)
