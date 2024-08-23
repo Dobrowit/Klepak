@@ -20,7 +20,7 @@ def map_view():
     for entry in data:
         popup_content = f"""
 <div>
-    <img src="{url_for('static', filename='data/' + entry['zdjecie'])}" style="max-width:100px; max-height:100px;">
+    <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:100px; max-height:100px;">
     <p>{entry['data']}: {entry['opis']}</p>
 </div>
 """
