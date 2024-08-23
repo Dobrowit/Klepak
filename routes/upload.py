@@ -1,9 +1,11 @@
 from flask import Blueprint, request, jsonify
-from utils import load_data, save_data, validate_lat_long, USERS_FILE, DATA_FILE, PHOTOS_DIR, MAX_IMAGE_SIZE
+from utils import load_data, save_data, validate_lat_long, load_polygon_from_kml, is_point_in_polygon, USERS_FILE, DATA_FILE, PHOTOS_DIR, MAX_IMAGE_SIZE
 import base64, os, time
 from werkzeug.utils import secure_filename
 import app
 from datetime import datetime
+from shapely.geometry import Point, Polygon
+from fastkml import kml
 
 upload_bp = Blueprint('upload', __name__)
 
@@ -29,7 +31,21 @@ def upload():
     # Limit długości opisu
     if len(opis) > 5000:  # przykładowy limit 1000 znaków
         return jsonify({'error': 'Opis jest zbyt długi (max 5000 znaków)'}), 400
-    
+
+    # Sprawdzanie czy jest w strefie
+    kml_file_path = 'data/gmina.kml'
+    polygon = load_polygon_from_kml(kml_file_path)
+    latitude = content.get('Latitude')
+    longitude = content.get('Longitude')
+
+    if polygon:
+        is_within_polygon = is_point_in_polygon(latitude, longitude, polygon)
+        if not is_within_polygon:
+            jsonify({'error': 'Punkt znajduje się poza obsługiwanym obszarem!'}), 400
+    else:
+        app.logger.error(f"Nie udało się załadować wielokąta z pliku KML.")
+        return jsonify({'error': 'Błąd serwera przy sprawdzaniu strefy!'}), 500
+
     # Wczytanie dotychczasowych danych użytkowników
     try:
         users = load_data(USERS_FILE)

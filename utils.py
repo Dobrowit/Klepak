@@ -1,4 +1,6 @@
 import json, os, time, re
+from shapely.geometry import Point, Polygon
+from fastkml import kml
 
 MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
 EXEMPT_IPS = ['127.0.0.1'] # Wyjątki od blokowania
@@ -46,3 +48,24 @@ def validate_email(email):
 # Walidacja kom.
 def validate_phone(phone):
     return phone.isdigit() and len(phone) == 9
+
+# Wczytaj plik KML
+def load_polygon_from_kml(kml_file_path):
+    with open(kml_file_path, 'rt', encoding='utf-8') as f:
+        doc = f.read()
+
+    k = kml.KML()
+    k.from_string(doc)
+
+    # Zakładamy, że plik KML zawiera tylko jeden placemark z polygonem
+    # W razie potrzeby możesz dostosować tę część, aby obsłużyć wiele elementów
+    placemarks = list(k.features())
+    for placemark in placemarks:
+        for feature in placemark.features():
+            if isinstance(feature.geometry, Polygon):
+                return feature.geometry
+
+# Sprawdzanie czy pkt jest w obszarze gminy
+def is_point_in_polygon(latitude, longitude, polygon):
+    point = Point(longitude, latitude)  # Shapely używa formatu (longitude, latitude)
+    return polygon.contains(point)
