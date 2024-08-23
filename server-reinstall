@@ -20,10 +20,28 @@ echo "Klonowanie repozytorium z $REPO_URL do katalogu $REPO_DIR..."
 git clone "$REPO_URL" "$REPO_DIR"
 
 echo "Przenoszenie plików z katalogu $REPO_DIR do katalogu $TARGET_DIR..."
+rm -f -d -r "$REPO_DIR/.git"
+rm -f -d -r "$REPO_DIR/.vscode"
+rm -f -d -r "$REPO_DIR/data"
+rm "$REPO_DIR/.gitignore"
+rm "$REPO_DIR/server-reinstall"
 mv "$REPO_DIR"/* "$TARGET_DIR/"
 
-echo "Usuwanie pustego katalogu $REPO_DIR i sprzątanie..."
-rmdir "$REPO_DIR"
-chmod +x "$TARGET_DIR\server-start"
+echo "Usuwanie pustego katalogu $REPO_DIR..."
+rm -f -d -r "$REPO_DIR"
+
+echo "Pobieranie bibliotek..."
+cd "$TARGET_DIR"
+python3 -m venv .venv
+source "$TARGET_DIR/.venv/bin/activate"
+pip install -r requirements.txt
+
+echo "Ustawienie uprawnień do plików..."
+chown -R dobrowit:dobrowit "$TARGET_DIR"
+chmod +x "$TARGET_DIR/server-start"
+chmod +x "$TARGET_DIR/server-setup"
 
 echo "Operacje zakończone pomyślnie."
+
+echo "Uruchamianie serwera klepak..."
+systemctl start klepak
