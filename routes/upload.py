@@ -2,29 +2,20 @@ from flask import Blueprint, request, jsonify
 from utils import load_data, save_data, validate_lat_long, USERS_FILE, DATA_FILE, DATA_DIR, MAX_IMAGE_SIZE
 import base64, os, time
 from werkzeug.utils import secure_filename
+import app
+from datetime import datetime
 
 upload_bp = Blueprint('upload', __name__)
 
 @upload_bp.route('/upload', methods=['POST'])
 def upload():
     content = request.json
-    user_id = content.get('id')
-    data = content.get('data')
-    opis = content.get('opis')
-    zdjecie_base64 = content.get('zdjecie')
-    latitude = content.get('latitude')
-    longitude = content.get('longitude')
-    kategoria = content.get('kategoria')
-
-# Dopasować do schematu:
-# {
-#     "Id": "test id",
-#     "Base64Image": "image in base 64",
-#     "Category": 4,
-#     "Message": "massage",
-#     "Latitude": 1.0,
-#     "Longitude": 1.0
-# }
+    user_id = content.get('Id')
+    opis = content.get('Message')
+    zdjecie_base64 = content.get('Base64Image')
+    latitude = content.get('Latitude')
+    longitude = content.get('Longitude')
+    kategoria = content.get('Category')
 
     if not user_id:
         return jsonify({'error': 'Brak ID użytkownika'}), 400
@@ -32,8 +23,8 @@ def upload():
     if not validate_lat_long(latitude, longitude):
         return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne.'}), 400
 
-    if not all([data, opis, zdjecie_base64, latitude, longitude, kategoria]):
-        return jsonify({'error': 'Brakuje data, opis, zdjecie, latitude, longitude lub kategoria'}), 400
+    if not all([opis, zdjecie_base64, latitude, longitude, kategoria]):
+        return jsonify({'error': 'Brakuje opis, zdjecie, latitude, longitude lub kategoria'}), 400
 
     # Limit długości opisu
     if len(opis) > 5000:  # przykładowy limit 1000 znaków
@@ -80,7 +71,7 @@ def upload():
     # Dodanie nowych danych
     new_entry = {
         'id': user_id,
-        'data': data,
+        'data': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'opis': opis,
         'zdjecie': zdjecie_filename,
         'latitude': latitude,

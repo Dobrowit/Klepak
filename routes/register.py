@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from utils import load_data, save_data, validate_email, validate_phone, USERS_FILE
 import uuid, time, os
+import app
 
 register_bp = Blueprint('register', __name__)
 
