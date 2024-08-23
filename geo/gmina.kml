@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Przykładowy Polygon</name>
+    <name>Obszar działania</name>
     <Placemark>
-      <name>Obszar z 4 wierzchołkami</name>
+      <name>Łeba</name>
       <Polygon>
         <outerBoundaryIs>
           <LinearRing>
