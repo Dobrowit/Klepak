@@ -17,8 +17,19 @@ def map_view():
     else:
         data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
 
+    # Utworzenie mapy
     map_ = folium.Map(location=[54.7578, 17.5610], zoom_start=15)
-    marker_cluster = MarkerCluster().add_to(map_)
+
+    # Dodanie MarkerCluster do mapy
+    marker_cluster = MarkerCluster(icon_create_function="""
+        function(cluster) {
+            return L.divIcon({ 
+                html: '<div style="background-color:red;"><span>' + cluster.getChildCount() + '</span></div>', 
+                className: 'marker-cluster', 
+                iconSize: new L.Point(40, 40) 
+            });
+        }
+    """).add_to(map_)
 
     for entry in data:
         popup_content = f"""
@@ -30,7 +41,8 @@ def map_view():
         folium.Marker(
             location=[entry['latitude'], entry['longitude']],
             popup=folium.Popup(popup_content, max_width=300),
-            tooltip=entry['opis']
+            tooltip=entry['opis'],
+            icon=folium.Icon(color='red', icon='info-sign')  # Ustawienie czerwonego koloru markera
         ).add_to(marker_cluster)
 
     map_html = map_._repr_html_()
