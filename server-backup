@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source server-backup
+
+tar -czf $BACKUP_DIR/klepak_r_$(date +%Y%m%d_%H%M%S).tgz -C $BACKUP_WORK_DIR klepak
+echo "Backup utworzony: /srv/backup/klepak_r_$(date +%Y%m%d_%H%M%S).tgz"

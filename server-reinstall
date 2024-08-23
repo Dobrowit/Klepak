@@ -1,10 +1,6 @@
 #!/bin/bash
 
-TARGET_DIR="/srv/klepak"
-BACKUP_WORK_DIR="/srv"
-BACKUP_DIR="$BACKUP_WORK_DIR/backup"
-REPO_DIR="$TARGET_DIR/Klepak"
-REPO_URL="https://github.com/Dobrowit/Klepak/"
+source server-backup
 
 echo "Zatrzymanie serwera klepak..."
 systemctl stop klepak

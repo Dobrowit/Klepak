@@ -1,16 +1,12 @@
 #!/bin/bash
 
-TARGET_DIR="/srv/klepak"
-BACKUP_WORK_DIR="/srv"
-BACKUP_DIR="$BACKUP_WORK_DIR/backup"
-REPO_DIR="$TARGET_DIR/Klepak"
-REPO_URL="https://github.com/Dobrowit/Klepak/"
+source server-backup
 
 echo "Zatrzymanie serwera klepak..."
 systemctl stop klepak
 
 tar --exclude="$TARGET_DIR/.venv" -czf $BACKUP_DIR/klepak_$(date +%Y%m%d_%H%M%S).tgz -C $BACKUP_WORK_DIR klepak
-echo "Backup utworzony: /srv/backup/klepak_$(date +%Y%m%d_%H%M%S).tgz"
+echo "Backup utworzony: /srv/backup/klepak_mini_$(date +%Y%m%d_%H%M%S).tgz"
 
 echo "Usuwanie plików i folderów z katalogu $TARGET_DIR, z wyjątkami..."
 mkdir /tmp/empty_dir
