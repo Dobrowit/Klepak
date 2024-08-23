@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source server-backup
+source server-config
 
 echo "Zatrzymanie serwera klepak..."
 systemctl stop klepak
