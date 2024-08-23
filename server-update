@@ -39,6 +39,7 @@ echo "Ustawienie uprawnień do plików..."
 chown -R dobrowit:dobrowit "$TARGET_DIR"
 chmod +x "$TARGET_DIR/server-start"
 chmod +x "$TARGET_DIR/server-setup"
+chmod +x "$TARGET_DIR/server-update"
 
 echo "Operacje zakończone pomyślnie."
 
