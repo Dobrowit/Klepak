@@ -34,13 +34,11 @@ def upload():
 
     # Sprawdzanie czy jest w strefie
     polygon = load_polygon_from_kml()
-    latitude = content.get('Latitude')
-    longitude = content.get('Longitude')
 
     if polygon:
         is_within_polygon = is_point_in_polygon(latitude, longitude, polygon)
         if not is_within_polygon:
-            jsonify({'error': 'Punkt znajduje się poza obsługiwanym obszarem!'}), 400
+            return jsonify({'error': 'Punkt znajduje się poza obsługiwanym obszarem!'}), 400
     else:
         app.logger.error(f"Nie udało się załadować wielokąta z pliku KML.")
         return jsonify({'error': 'Błąd serwera przy sprawdzaniu strefy!'}), 500
