@@ -16,6 +16,8 @@ find "$TARGET_DIR" -mindepth 1 \
     -not -path "$TARGET_DIR/data/*" \
     -not -path "$TARGET_DIR/.venv" \
     -not -path "$TARGET_DIR/.venv/*" \
+    -not -path "$TARGET_DIR/static/photos" \
+    -not -path "$TARGET_DIR/static/photos/*" \
     -exec rm -rf {} +
 
 echo "Klonowanie repozytorium z $REPO_URL do katalogu $REPO_DIR..."
