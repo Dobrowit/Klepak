@@ -41,7 +41,7 @@ def map_view():
     """).add_to(map_)
 
     for entry in data:
-        kat_id = str(entry.get('kategoria', '99'))
+        kat_id = entry.get('kategoria', '99')
 
         # Znalezienie kategorii na podstawie kat_id
         category = next((category for category in kategorie if int(category['id']) == kat_id), None)
