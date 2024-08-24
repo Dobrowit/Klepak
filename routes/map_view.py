@@ -9,7 +9,7 @@ CATEGORY_ICON_MAP = {
     3: ("road-circle-exclamation"),
     4: ("hand-fist"),
     5: ("person-falling-burst"),
-    6: ("accessible-icon"),
+    6: ("wheelchair-move"),
     7: ("triangle-exclamation"),
     8: ("paw"),
     9: ("trash-arrow-up"),
