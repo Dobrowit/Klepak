@@ -32,6 +32,11 @@ def upload():
     if len(opis) > 5000:  # przykładowy limit 1000 znaków
         return jsonify({'error': 'Opis jest zbyt długi (max 5000 znaków)'}), 400
 
+    # Jeśli kategoria = 99 (inne) to wymagany jest opis
+    if kategoria == 99:
+        if len(opis) < 30:
+            return jsonify({'error': 'Wybrałeś kategorię "inne" więc musisz podać opis (min 30 znaków)'}), 400
+
     # Sprawdzanie czy jest w strefie
     polygon = load_polygon_from_kml()
 
