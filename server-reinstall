@@ -53,3 +53,5 @@ echo -e "Reinstalacja serwera Klepak ukończona - `date +"%Y-%m-%d %H:%M:%S"`.\n
 Sprawdź czy coś się nie popsuło:\n\n\
 http://maluch3.mikr.us:20162/status\n\n\
 https://klepak.cytr.us:20162/status" | pusher
+
+systemctl status klepak
