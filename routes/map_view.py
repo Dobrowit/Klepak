@@ -59,14 +59,14 @@ def map_view():
         folium.Marker(
             location=[entry['latitude'], entry['longitude']],
             popup=folium.Popup(popup_content, max_width=300),
-            tooltip=entry['data'] + "<br>" + str(entry['kategoria']) + "<br>" + icon_color,
+            tooltip=entry['data'] + "<br>" + str(entry['kategoria']) + "<br>" + icon_color + " | " + icon_symbol,
             icon=folium.Icon(#color='red', # Ustawienie czerwonego koloru markera
                              #icon='info-sign', 
                              #icon_image='path/to/your/icon.png',
                              #color=icon_color,
                              #icon=icon_symbol,
                              #icon_size=(30, 30),
-                             color='lightgray', icon='home', prefix='fa'
+                             color='lightgray', icon=icon_symbol, prefix='fa'
                              ) 
         ).add_to(marker_cluster)
 
