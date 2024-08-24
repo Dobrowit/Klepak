@@ -44,7 +44,7 @@ def map_view():
         kat_id = str(entry.get('kategoria', '99'))
 
         # Znalezienie kategorii na podstawie kat_id
-        category = next((category for category in kategorie if category['id'] == kat_id), None)
+        category = next((category for category in kategorie if int(category['id']) == kat_id), None)
         if category:
             nazwa_kat = category['nazwa_kat']
             icon_symbol = category['ikona']
