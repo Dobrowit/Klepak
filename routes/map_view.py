@@ -4,18 +4,18 @@ import folium
 from folium.plugins import MarkerCluster
 
 CATEGORY_ICON_MAP = {
-    "1": ("red", "warning-sign"),
-    "2": ("blue", "info-sign"),
+    "1": ("red", "bridge-circle-exclamation"),
+    "2": ("blue", "signs-post"),
     "3": ("red", "road-circle-exclamation"),
-    "4": ("black", "thumbs-up"),
-    "5": ("purple", "question-sign"),
-    "6": ("green", "star"),
-    "7": ("pink", "heart"),
+    "4": ("black", "hand-fist"),
+    "5": ("purple", "person-falling-burst"),
+    "6": ("green", "accessible-icon"),
+    "7": ("pink", "triangle-exclamation"),
     "8": ("brown", "paw"),
-    "9": ("grey", "trash"),
-    "10": ("darkred", "fire"),
-    "11": ("lightgreen", "tree"),
-    "99": ("lightblue", "plus-sign")
+    "9": ("grey", "trash-arrow-up"),
+    "10": ("darkred", "dumpster-fire"),
+    "11": ("lightgreen", "wheat-awn-circle-exclamation"),
+    "99": ("lightblue", "circle-plus")
 }
 
 map_view_bp = Blueprint('map_view', __name__)
