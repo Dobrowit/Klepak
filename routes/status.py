@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from utils import load_data, get_uptime, DATA_DIR, DATA_FILE
+from utils import load_data, get_uptime, DATA_DIR, DATA_FILE, MAX_IMAGE_SIZE
 import utils
 import os
 
@@ -32,6 +32,7 @@ def status():
         'ip_blocks': utils.ip_blocks,
         'ip_blocks_unknown': utils.ip_blocks_unknown,
         'entry_counter': utils.entry_counter,
+        'max_image_size': MAX_IMAGE_SIZE,
         'uptime': uptime_str
     }
 
