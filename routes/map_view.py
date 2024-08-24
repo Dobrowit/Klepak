@@ -43,7 +43,7 @@ def map_view():
     data = load_data(DATA_FILE)
     kategorie = load_data(CATEGORY_FILE)
     for entry in data:
-        kat_id = int(entry['kategoria'])
+        kat_id = entry['kategoria']
 
         # Znalezienie kategorii na podstawie kat_id
         category = next((category for category in kategorie if category['id'] == kat_id), None)
@@ -54,7 +54,10 @@ def map_view():
         popup_content = f"""
 <div>
     <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:300px; max-height:200px;">
-    <p>{entry['data']}:<br>{nazwa_kat}<br>{entry['opis']}</p>
+    <p>{entry['data']}:<br>
+    <b>{nazwa_kat}</b></p>
+    <hr>
+    <p>{entry['opis']}</p>
 </div>
 """
         folium.Marker(
