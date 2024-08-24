@@ -70,13 +70,7 @@ def map_view():
             tooltip=entry['data'] + "<br>" + str(entry['kategoria']) + "<br>" + icon_color + " | " + icon_symbol,
             icon=folium.Icon(color=icon_color,
                              icon=icon_symbol,
-                             prefix='fa')).add_to(folium.FeatureGroup(name=str(entry['kategoria'])))
-
-    folium.LayerControl(collapsed=False).add_to(map_)
-    folium.GroupedLayerControl(
-        groups={'groups1': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ,99]},
-        collapsed=False,
-    ).add_to(map_)
+                             prefix='fa')).add_to(map_)
 
     map_html = map_._repr_html_()
     return render_template('map.html', map_html=map_html)
