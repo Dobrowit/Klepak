@@ -35,6 +35,14 @@ def map_view():
     # Utworzenie mapy
     map_ = folium.Map(location=[54.7578, 17.5610], zoom_start=15)
 
+    # Ikonka full-screen
+    folium.plugins.Fullscreen(
+        position="topright",
+        title="Expand me",
+        title_cancel="Exit me",
+        force_separate_button=True,
+    ).add_to(map_)
+
     # Dodanie MarkerCluster do mapy
     marker_cluster = MarkerCluster(icon_create_function="""
         function(cluster) {
