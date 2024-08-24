@@ -55,8 +55,8 @@ def map_view():
 <div>
     <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:300px; max-height:200px;">
     <h1>{nazwa_kat}</h1>
-    <h2>{entry['data']}:</h2>
-    <hr style="border: 3px solid black;">
+    <p>{entry['data']}</p>
+    <hr style="border: 3px solid black; margin: 0;">
     <p>{entry['opis']}</p>
 </div>
 """
