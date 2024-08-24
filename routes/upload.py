@@ -61,19 +61,26 @@ def upload():
         app.logger.error(f"Błąd przy wczytywaniu istniejących danych: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy uploadzie'}), 500
     
-    # Dekodowanie i zapisywanie zdjęcia
+    # Dekodowanie zdjęcia
     try:
         zdjecie_bytes = base64.b64decode(zdjecie_base64)
         if len(zdjecie_bytes) > MAX_IMAGE_SIZE:
             return jsonify({'error': 'Plik jest za duży, maksymalny rozmiar to 5 MB.'}), 400
     except base64.binascii.Error:
         return jsonify({'error': 'Błędne dane base64'}), 400
+    
+    # Sprawdzanie czy to JPEG
+    if zdjecie_bytes[:3] == b'\xFF\xD8\xFF':
+        pass
+    else:
+        return jsonify({'error': 'Plik nie jest w formacie JPEG.'}), 400
 
     # Generowanie unikalnej nazwy pliku
     timestamp = int(time.time() * 1000)
     zdjecie_filename = secure_filename(f"{timestamp}_{user_id}.jpg")
     zdjecie_path = os.path.join(PHOTOS_DIR, zdjecie_filename)
 
+    # Zapisywanie zdjęcia
     try:
         with open(zdjecie_path, 'wb') as zdjecie_file:
             zdjecie_file.write(zdjecie_bytes)
