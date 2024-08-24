@@ -47,9 +47,7 @@ def map_view():
     """).add_to(map_)
 
     for entry in data:
-        category = entry.get('kategoria', '99')  # Zakładam, że kategoria jest w kluczu 'kategoria'
-
-        # Pobranie koloru i wzoru ikony na podstawie kategorii
+        category = entry.get('kategoria', '99')
         icon_color, icon_symbol = CATEGORY_ICON_MAP.get(category, ("grey", "info-sign"))
 
         popup_content = f"""
@@ -61,13 +59,13 @@ def map_view():
         folium.Marker(
             location=[entry['latitude'], entry['longitude']],
             popup=folium.Popup(popup_content, max_width=300),
-            tooltip=entry['data'] + "<br>" + str(entry['kategoria']),
+            tooltip=entry['data'] + "<br>" + str(entry['kategoria'] + "<br>" + icon_color),
             icon=folium.Icon(#color='red', # Ustawienie czerwonego koloru markera
                              #icon='info-sign', 
                              #icon_image='path/to/your/icon.png',
                              color=icon_color,
                              icon=icon_symbol,
-                             #icon_size=(30, 30)
+                             icon_size=(30, 30)
                              ) 
         ).add_to(marker_cluster)
 
