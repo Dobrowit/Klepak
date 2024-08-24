@@ -65,6 +65,7 @@ def map_view():
                              #icon_image='path/to/your/icon.png',
                              color=icon_color,
                              icon=icon_symbol,
+                             prefix='fa',
                              icon_size=(30, 30)
                              ) 
         ).add_to(marker_cluster)
