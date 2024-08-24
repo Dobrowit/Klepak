@@ -50,8 +50,11 @@ app.logger.info(f"Baza GeoIP załadowana")
 # Logowanie adresów IP
 @app.before_request
 def log_request_info():
-    utils.entry_counter += 1
-    app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
+    if "Uptime-Kuma" in request.user_agent:
+        pass
+    else:
+        utils.entry_counter += 1
+        app.logger.info(f"Mamy gościa - Adres IP: {request.remote_addr}, URL: {request.url}, Metoda: {request.method}, User-Agent: {request.user_agent}")
 
 # Blokowanie wejść spoza Polski
 @app.before_request
