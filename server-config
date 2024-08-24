@@ -6,3 +6,4 @@ BACKUP_DIR="/storage"
 REPO_DIR="$TARGET_DIR/Klepak"
 REPO_URL="https://github.com/Dobrowit/Klepak/"
 WORKERS=1
+TIMEOUT=120
