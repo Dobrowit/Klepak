@@ -62,7 +62,7 @@ def map_view():
             tooltip=entry['data'] + "<br>" + str(entry['kategoria']) + "<br>" + icon_color + " | " + icon_symbol,
             icon=folium.Icon(color=icon_color,
                              icon=icon_symbol,
-                             prefix='fa-regular fa')).add_to(marker_cluster)
+                             prefix='fa-regular')).add_to(marker_cluster)
 
     map_html = map_._repr_html_()
     return render_template('map.html', map_html=map_html)
