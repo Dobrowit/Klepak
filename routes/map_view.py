@@ -54,10 +54,10 @@ def map_view():
         popup_content = f"""
 <div>
     <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:300px; max-height:200px;">
-    <p>{entry['data']}:<br>
-    <b>{nazwa_kat}</b>
-    <hr style="border: 13px solid red;">
-    {entry['opis']}</p>
+    <h1>{nazwa_kat}</h1>
+    <h2>{entry['data']}:</h2>
+    <hr style="border: 3px solid black;">
+    <p>{entry['opis']}</p>
 </div>
 """
         folium.Marker(
