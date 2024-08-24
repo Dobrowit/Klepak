@@ -40,11 +40,13 @@ def map_view():
         }
     """).add_to(map_)
 
+    #data = load_data(DATA_FILE)
+    #kategorie = load_data(CATEGORY_FILE)
     for entry in data:
-        kat_id = entry.get('kategoria', '99')
+        kat_id = entry['kategoria']
 
         # Znalezienie kategorii na podstawie kat_id
-        category = next((category for category in kategorie if int(category['id']) == kat_id), None)
+        category = next((category for category in kategorie if category['id'] == kat_id), None)
         if category:
             nazwa_kat = category['nazwa_kat']
             icon_symbol = category['ikona']
