@@ -54,4 +54,4 @@ Sprawdź czy coś się nie popsuło:\n\n\
 http://maluch3.mikr.us:20162/status\n\n\
 https://klepak.cytr.us:20162/status" | pusher
 
-systemctl status klepak
+systemctl status klepak | cat
