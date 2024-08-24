@@ -15,7 +15,7 @@ CATEGORY_ICON_MAP = {
     "9": ("grey", "trash-arrow-up"),
     "10": ("darkred", "dumpster-fire"),
     "11": ("lightgreen", "wheat-awn-circle-exclamation"),
-    "99": ("lightblue", "circle-plus")
+    "99": ("lightblue", "star")
 }
 
 map_view_bp = Blueprint('map_view', __name__)
