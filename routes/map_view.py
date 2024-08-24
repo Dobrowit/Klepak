@@ -55,9 +55,9 @@ def map_view():
 <div>
     <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:300px; max-height:200px;">
     <p>{entry['data']}:<br>
-    <b>{nazwa_kat}</b></p>
-    <hr>
-    <p>{entry['opis']}</p>
+    <b>{nazwa_kat}</b>
+    <hr style="border: 13px solid red;">
+    {entry['opis']}</p>
 </div>
 """
         folium.Marker(
