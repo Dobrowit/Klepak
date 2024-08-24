@@ -1,8 +1,21 @@
 <html>
     <head>
         <title>map_view - Mapa zgłoszeń</title>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #map-container {
+                height: 100%;
+                width: 100%;
+            }
+        </style>
     </head>
     <body>
-        {{ map_html|safe }}
+        <div id="map-container">
+            {{ map_html|safe }}
+        </div>
     </body>
 </html>
