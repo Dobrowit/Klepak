@@ -4,18 +4,18 @@ import folium
 from folium.plugins import MarkerCluster
 
 CATEGORY_ICON_MAP = {
-    "1": ("red", "bridge-circle-exclamation"),
-    "2": ("blue", "home"),
-    "3": ("red", "road-circle-exclamation"),
-    "4": ("black", "star"),
-    "5": ("purple", "person-falling-burst"),
-    "6": ("green", "accessible-icon"),
-    "7": ("pink", "triangle-exclamation"),
-    "8": ("brown", "paw"),
-    "9": ("grey", "trash-arrow-up"),
-    "10": ("darkred", "dumpster-fire"),
-    "11": ("lightgreen", "wheat-awn-circle-exclamation"),
-    "99": ("lightblue", "star")
+    1: ("red", "bridge-circle-exclamation"),
+    2: ("blue", "signs-post"),
+    3: ("red", "road-circle-exclamation"),
+    4: ("black", "hand-fist"),
+    5: ("purple", "person-falling-burst"),
+    6: ("green", "accessible-icon"),
+    7: ("pink", "triangle-exclamation"),
+    8: ("brown", "paw"),
+    9: ("grey", "trash-arrow-up"),
+    10: ("darkred", "dumpster-fire"),
+    11: ("lightgreen", "wheat-awn-circle-exclamation"),
+    99: ("lightblue", "circle-plus")
 }
 
 map_view_bp = Blueprint('map_view', __name__)
@@ -69,7 +69,8 @@ def map_view():
             popup=folium.Popup(popup_content, max_width=300),
             tooltip=entry['data'] + "<br>" + str(entry['kategoria']) + "<br>" + icon_color + " | " + icon_symbol,
             icon=folium.Icon(color=icon_color,
-                             icon=icon_symbol)).add_to(map_)
+                             icon=icon_symbol,
+                             prefix='fa')).add_to(marker_cluster)
 
     map_html = map_._repr_html_()
     return render_template('map.html', map_html=map_html)

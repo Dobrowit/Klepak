@@ -1,17 +1,227 @@
 [
     {
-        "data": "2024-08-06T14:00:00",
-        "opis": "Przyk\u0142adowy opis",
-        "zdjecie": "data/2024-08-06T14-00-00.jpg",
-        "latitude": 52.2296756,
-        "longitude": 21.0122287
-    },
-    {
-        "id": "240c311c-379b-49b1-b3b7-cbbdc1c69a2c",
+        "id": "9389f8dd-18f8-444a-8dd7-4c815f349a6f",
         "data": "2023-08-11 14:30:00",
         "opis": "Przyk\u0142adowy opis zdj\u0119cia",
         "zdjecie": "1723337019381_240c311c-379b-49b1-b3b7-cbbdc1c69a2c.jpg",
         "latitude": 54.7578,
-        "longitude": 17.561
+        "longitude": 17.561,
+        "kategoria": 3
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 14:20:43",
+        "opis": "Opis testowy. Opis testowy. Opis testowy.",
+        "zdjecie": "1724415643710_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7178,
+        "longitude": 17.571,
+        "kategoria": 3
+    },
+    {
+        "id": "9389f8dd-18f8-444a-8dd7-4c815f349a6f",
+        "data": "2024-08-23 14:32:29",
+        "opis": "test message",
+        "zdjecie": "1724416349089_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 2.0,
+        "longitude": 3.0,
+        "kategoria": 3
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 15:32:13",
+        "opis": "test123",
+        "zdjecie": "1724419933352_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7556516,
+        "longitude": 17.5578977,
+        "kategoria": 6
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 15:33:21",
+        "opis": "test message2",
+        "zdjecie": "1724420001439_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 2.0,
+        "longitude": 3.0,
+        "kategoria": 3
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 15:39:46",
+        "opis": "test",
+        "zdjecie": "1724420386682_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7556696,
+        "longitude": 17.5578647,
+        "kategoria": 6
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 15:41:04",
+        "opis": "test resized",
+        "zdjecie": "1724420464956_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7556698,
+        "longitude": 17.5578591,
+        "kategoria": 6
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 15:54:53",
+        "opis": "test123",
+        "zdjecie": "1724421293155_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7556628,
+        "longitude": 17.5578852,
+        "kategoria": 8
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 15:55:16",
+        "opis": "test123",
+        "zdjecie": "1724421315998_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7556628,
+        "longitude": 17.5578852,
+        "kategoria": 8
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 18:46:58",
+        "opis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut consectetur est. In dictum egestas erat vel convallis. Curabitur vestibulum dui a dui faucibus, eget egestas est consequat. Praesent auctor purus et pharetra porttitor. Curabitur sed consectetur ante. Donec tincidunt aliquet euismod. Morbi tristique pellentesque ipsum, eu faucibus nunc pharetra vel. Integer cursus iaculis felis eu tempor. Phasellus et fringilla lectus, et convallis tortor. Integer et dictum tortor. Nam malesuada erat lorem, at accumsan quam blandit vitae.",
+        "zdjecie": "1724431618905_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7582031,
+        "longitude": 57.5649481,
+        "kategoria": 3
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 19:55:13",
+        "opis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut consectetur est. In dictum egestas erat vel convallis. Curabitur vestibulum dui a dui faucibus, eget egestas est consequat. Praesent auctor purus et pharetra porttitor. Curabitur sed consectetur ante. Donec tincidunt aliquet euismod. Morbi tristique pellentesque ipsum, eu faucibus nunc pharetra vel. Integer cursus iaculis felis eu tempor. Phasellus et fringilla lectus, et convallis tortor. Integer et dictum tortor. Nam malesuada erat lorem, at accumsan quam blandit vitae.",
+        "zdjecie": "1724435713218_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7582031,
+        "longitude": 57.5649481,
+        "kategoria": 3
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 19:55:37",
+        "opis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut consectetur est. In dictum egestas erat vel convallis. Curabitur vestibulum dui a dui faucibus, eget egestas est consequat. Praesent auctor purus et pharetra porttitor. Curabitur sed consectetur ante. Donec tincidunt aliquet euismod. Morbi tristique pellentesque ipsum, eu faucibus nunc pharetra vel. Integer cursus iaculis felis eu tempor. Phasellus et fringilla lectus, et convallis tortor. Integer et dictum tortor. Nam malesuada erat lorem, at accumsan quam blandit vitae.",
+        "zdjecie": "1724435737323_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7582031,
+        "longitude": 17.5649481,
+        "kategoria": 3
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-23 20:09:24",
+        "opis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut consectetur est. In dictum egestas erat vel convallis. Curabitur vestibulum dui a dui faucibus, eget egestas est consequat. Praesent auctor purus et pharetra porttitor. Curabitur sed consectetur ante. Donec tincidunt aliquet euismod. Morbi tristique pellentesque ipsum, eu faucibus nunc pharetra vel. Integer cursus iaculis felis eu tempor. Phasellus et fringilla lectus, et convallis tortor. Integer et dictum tortor. Nam malesuada erat lorem, at accumsan quam blandit vitae.",
+        "zdjecie": "1724436564883_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7582031,
+        "longitude": 17.5649481,
+        "kategoria": 99
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 16:36:32",
+        "opis": "sobota na testowanie :)",
+        "zdjecie": "1724510192266_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.755653333333335,
+        "longitude": 17.557896666666668,
+        "kategoria": 12
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:01:05",
+        "opis": "sobota ah sobota",
+        "zdjecie": "1724511665534_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.755653333333335,
+        "longitude": 17.557896666666668,
+        "kategoria": 11
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:09:16",
+        "opis": "sobota niszczy mnie",
+        "zdjecie": "1724512156981_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7506175,
+        "longitude": 17.5655482,
+        "kategoria": 10
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:17:45",
+        "opis": "qwerty",
+        "zdjecie": "1724512665345_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.755653333333335,
+        "longitude": 17.557896666666668,
+        "kategoria": 9
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:21:12",
+        "opis": "Jak nazywa si\u0119 kot Elona Muska?\nMaskotka",
+        "zdjecie": "1724512872909_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7506215,
+        "longitude": 17.5655432,
+        "kategoria": 8
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:26:40",
+        "opis": "test",
+        "zdjecie": "1724513200952_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7506257,
+        "longitude": 17.565533,
+        "kategoria": 7
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:29:03",
+        "opis": "ulala",
+        "zdjecie": "1724513343262_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7506144,
+        "longitude": 17.5655378,
+        "kategoria": 6
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:38:59",
+        "opis": "test",
+        "zdjecie": "1724513939676_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7506118,
+        "longitude": 17.5655242,
+        "kategoria": 5
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:41:19",
+        "opis": "testowi",
+        "zdjecie": "1724514079573_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.75061,
+        "longitude": 17.5655278,
+        "kategoria": 4
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:42:40",
+        "opis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut consectetur est. In dictum egestas erat vel convallis. Curabitur vestibulum dui a dui faucibus, eget egestas est consequat. Praesent auctor purus et pharetra porttitor. Curabitur sed consectetur ante. Donec tincidunt aliquet euismod. Morbi tristique pellentesque ipsum, eu faucibus nunc pharetra vel. Integer cursus iaculis felis eu tempor. Phasellus et fringilla lectus, et convallis tortor. Integer et dictum tortor. Nam malesuada erat lorem, at accumsan quam blandit vitae.",
+        "zdjecie": "1724514160098_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7582131,
+        "longitude": 17.5649781,
+        "kategoria": 3
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:42:56",
+        "opis": "",
+        "zdjecie": "1724514176262_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7582131,
+        "longitude": 17.5649781,
+        "kategoria": 2
+    },
+    {
+        "id": "d4fb8586-101f-4dff-a91e-2488b8214ba3",
+        "data": "2024-08-24 17:47:20",
+        "opis": "heahshdjdd",
+        "zdjecie": "1724514440216_d4fb8586-101f-4dff-a91e-2488b8214ba3.jpg",
+        "latitude": 54.7506248,
+        "longitude": 17.5655044,
+        "kategoria": 1
     }
 ]
