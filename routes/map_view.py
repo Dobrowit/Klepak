@@ -3,6 +3,21 @@ from utils import load_data, DATA_FILE
 import folium
 from folium.plugins import MarkerCluster
 
+CATEGORY_ICON_MAP = {
+    "1": ("red", "warning-sign"),
+    "2": ("blue", "info-sign"),
+    "3": ("orange", "exclamation-sign"),
+    "4": ("black", "thumbs-up"),
+    "5": ("purple", "question-sign"),
+    "6": ("green", "star"),
+    "7": ("pink", "heart"),
+    "8": ("brown", "paw"),
+    "9": ("grey", "trash"),
+    "10": ("darkred", "fire"),
+    "11": ("lightgreen", "tree"),
+    "99": ("lightblue", "plus-sign")
+}
+
 map_view_bp = Blueprint('map_view', __name__)
 
 @map_view_bp.route('/map', methods=['GET'])
@@ -32,6 +47,11 @@ def map_view():
     """).add_to(map_)
 
     for entry in data:
+        category = entry.get('kategoria', '99')  # Zakładam, że kategoria jest w kluczu 'kategoria'
+
+        # Pobranie koloru i wzoru ikony na podstawie kategorii
+        icon_color, icon_symbol = CATEGORY_ICON_MAP.get(category, ("grey", "info-sign"))
+
         popup_content = f"""
 <div>
     <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:100px; max-height:100px;">
@@ -41,8 +61,11 @@ def map_view():
         folium.Marker(
             location=[entry['latitude'], entry['longitude']],
             popup=folium.Popup(popup_content, max_width=300),
-            tooltip=entry['opis'],
-            icon=folium.Icon(color='red', icon='info-sign')  # Ustawienie czerwonego koloru markera
+            tooltip=entry['data'],
+            icon=folium.Icon(color='red', # Ustawienie czerwonego koloru markera
+                             icon='info-sign', 
+                             icon_image='path/to/your/icon.png',
+                             icon_size=(30, 30)) 
         ).add_to(marker_cluster)
 
     map_html = map_._repr_html_()
