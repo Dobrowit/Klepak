@@ -16,3 +16,13 @@ def get_categories():
         data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
 
     return jsonify(data), 200
+
+@categories_bp.route('/categories/<int:category_id>', methods=['GET'])
+def get_category(category_id):
+    categories = load_data(CATEGORY_FILE)
+    category = next((cat for cat in categories if cat['id'] == category_id), None)
+    
+    if category is None:
+        return jsonify({'error': 'Nie znaleziono kategorii o podanym ID'}), 404
+    
+    return jsonify(category), 200
