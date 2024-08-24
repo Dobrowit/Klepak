@@ -69,8 +69,7 @@ def map_view():
             popup=folium.Popup(popup_content, max_width=300),
             tooltip=entry['data'] + "<br>" + str(entry['kategoria']) + "<br>" + icon_color + " | " + icon_symbol,
             icon=folium.Icon(color=icon_color,
-                             icon=icon_symbol,
-                             prefix='fa')).add_to(map_)
+                             icon=icon_symbol)).add_to(map_)
 
     map_html = map_._repr_html_()
     return render_template('map.html', map_html=map_html)
