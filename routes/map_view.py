@@ -62,10 +62,13 @@ def map_view():
             location=[entry['latitude'], entry['longitude']],
             popup=folium.Popup(popup_content, max_width=300),
             tooltip=entry['data'],
-            icon=folium.Icon(color='red', # Ustawienie czerwonego koloru markera
-                             icon='info-sign', 
-                             icon_image='path/to/your/icon.png',
-                             icon_size=(30, 30)) 
+            icon=folium.Icon(#color='red', # Ustawienie czerwonego koloru markera
+                             #icon='info-sign', 
+                             #icon_image='path/to/your/icon.png',
+                             color=icon_color,
+                             icon=icon_symbol,
+                             #icon_size=(30, 30)
+                             ) 
         ).add_to(marker_cluster)
 
     map_html = map_._repr_html_()
