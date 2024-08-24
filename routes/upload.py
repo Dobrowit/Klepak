@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from utils import load_data, save_data, validate_lat_long, load_polygon_from_kml, is_point_in_polygon, USERS_FILE, DATA_FILE, PHOTOS_DIR, MAX_IMAGE_SIZE
+from utils import load_data, save_data, validate_lat_long, load_polygon_from_kml, is_point_in_polygon, USERS_FILE, DATA_FILE, PHOTOS_DIR, MAX_IMAGE_SIZE, CATEGORY_FILE
 import base64, os, time
 from werkzeug.utils import secure_filename
 import app
@@ -48,6 +48,17 @@ def upload():
         app.logger.error(f"Nie udało się załadować wielokąta z pliku KML.")
         return jsonify({'error': 'Błąd serwera przy sprawdzaniu strefy!'}), 500
 
+    # Wczytanie kategorii
+    try:
+        kategorie = load_data(CATEGORY_FILE)
+    except IOError as e:
+        app.logger.error(f"Błąd przy wczytywaniu danych kategorii: {str(e)}")
+        return jsonify({'error': 'Błąd serwera przy uploadzie'}), 500
+    
+    # Sprawdzenie, czy podana kat. jest zarejestrowane
+    if not any(category['id'] == kategoria for category in kategorie):
+        return jsonify({'error': 'Błędny ID kategorii!'}), 400
+    
     # Wczytanie dotychczasowych danych użytkowników
     try:
         users = load_data(USERS_FILE)

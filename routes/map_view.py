@@ -1,22 +1,7 @@
 from flask import Blueprint, request, render_template, url_for
-from utils import load_data, DATA_FILE
+from utils import load_data, DATA_FILE, CATEGORY_FILE
 import folium
 from folium.plugins import MarkerCluster
-
-CATEGORY_ICON_MAP = {
-    1: ("bridge-circle-exclamation"),
-    2: ("signs-post"),
-    3: ("map-signs"),
-    4: ("hand-fist"),
-    5: ("person-falling-burst"),
-    6: ("wheelchair-move"),
-    7: ("triangle-exclamation"),
-    8: ("paw"),
-    9: ("trash-arrow-up"),
-    10: ("dumpster-fire"),
-    11: ("wheat-awn-circle-exclamation"),
-    99: ("circle-plus")
-}
 
 map_view_bp = Blueprint('map_view', __name__)
 
@@ -24,6 +9,7 @@ map_view_bp = Blueprint('map_view', __name__)
 def map_view():
     entry_id = request.args.get('id')
     data = load_data(DATA_FILE)
+    kategorie = load_data(CATEGORY_FILE)
 
     if entry_id:
         data = [entry for entry in data if entry['id'] == entry_id]
@@ -55,19 +41,24 @@ def map_view():
     """).add_to(map_)
 
     for entry in data:
-        category = entry.get('kategoria', '99')
-        icon_symbol = CATEGORY_ICON_MAP.get(category, ("info-sign"))
+        kat_id = entry.get('kategoria', '99')
+
+        # Znalezienie kategorii na podstawie kat_id
+        category = next((category for category in kategorie if category['id'] == kat_id), None)
+        if category:
+            nazwa_kat = category['nazwa_kat']
+            icon_symbol = category['ikona']
 
         popup_content = f"""
 <div>
-    <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:100px; max-height:100px;">
-    <p>{entry['data']}: {entry['opis']}</p>
+    <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:300px; max-height:200px;">
+    <p>{entry['data']}:<br>{nazwa_kat}<br>{entry['opis']}</p>
 </div>
 """
         folium.Marker(
             location=[entry['latitude'], entry['longitude']],
             popup=folium.Popup(popup_content, max_width=300),
-            tooltip=entry['data'] + "<br>" + str(entry['kategoria']) + "<br>" + icon_symbol,
+            tooltip=entry['data'] + "<br>" + nazwa_kat,
             icon=folium.Icon(color='red',
                              icon=icon_symbol,
                              prefix='fa')).add_to(marker_cluster)

@@ -11,6 +11,7 @@ DATA_DIR = 'data' # Katalog do przechowywania danych
 PHOTOS_DIR = 'static/photos' # Katalog do przechowywania zdjęć
 USERS_FILE = os.path.join(DATA_DIR, 'users.json') # Plik do przechowywania danych użytkowników
 DATA_FILE = os.path.join(DATA_DIR, 'data.json') # Plik do przechowywania danych
+CATEGORY_FILE = os.path.join(DATA_DIR, 'category.json')
 
 entry_counter = 0
 ip_blocks = 0
