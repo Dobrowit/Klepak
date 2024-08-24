@@ -1,3 +1,2 @@
 # Klepak
-Serwer REST dla apki mobilnej
-https://github.com/XenkQ/SendReportApp
+Server for mobile app - https://github.com/XenkQ/SendReportApp
