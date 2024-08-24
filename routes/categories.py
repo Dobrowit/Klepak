@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
 from utils import load_data, CATEGORY_FILE
 
-data_bp = Blueprint('categories', __name__)
+categories_bp = Blueprint('categories', __name__)
 
-@data_bp.route('/categories', methods=['GET'])
-def get_data():
+@categories_bp.route('/categories', methods=['GET'])
+def get_categories():
     entry_id = request.args.get('id')
     data = load_data(CATEGORY_FILE)
 
