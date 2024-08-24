@@ -5,9 +5,9 @@ from folium.plugins import MarkerCluster
 
 CATEGORY_ICON_MAP = {
     "1": ("red", "bridge-circle-exclamation"),
-    "2": ("blue", "signs-post"),
+    "2": ("blue", "home"),
     "3": ("red", "road-circle-exclamation"),
-    "4": ("black", "hand-fist"),
+    "4": ("black", "star"),
     "5": ("purple", "person-falling-burst"),
     "6": ("green", "accessible-icon"),
     "7": ("pink", "triangle-exclamation"),
