@@ -8,7 +8,7 @@ status_bp = Blueprint('status', __name__)
 @status_bp.route('/status', methods=['GET'])
 def status():
     #global entry_counter
-    print("endpoint - status - entry_counter:", utils.entry_counter)
+    #print("endpoint - status - entry_counter:", utils.entry_counter)
     data = load_data(DATA_FILE)
     num_entries = len(data)
     num_images = len([name for name in os.listdir(DATA_DIR) if name.endswith('.jpg') and os.path.isfile(os.path.join(DATA_DIR, name))])
