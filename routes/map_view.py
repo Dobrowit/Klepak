@@ -61,12 +61,12 @@ def map_view():
 </div>
 """
         folium.Marker(
-            location=[entry['latitude'], entry['longitude']],
-            popup=folium.Popup(popup_content, max_width=300),
-            tooltip=entry['data'] + "<br>" + nazwa_kat,
-            icon=folium.Icon(color='red',
-                             icon=icon_symbol,
-                             prefix='fa')).add_to(marker_cluster)
+            location = [entry['latitude'], entry['longitude']],
+            popup = folium.Popup(popup_content, max_width=300),
+            tooltip = nazwa_kat,
+            icon = folium.Icon(color = 'red',
+                               icon = icon_symbol,
+                               prefix = 'fa')).add_to(marker_cluster)
 
     map_html = map_._repr_html_()
     return render_template('map.html', map_html=map_html)

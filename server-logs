@@ -1,0 +1,3 @@
+#!/bin/bash
+
+journalctl -q -u klepak | awk -F ']: ' '{print $2}' | tail -n `calc "floor($LINES / 3)"`
