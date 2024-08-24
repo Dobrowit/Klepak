@@ -87,6 +87,18 @@
                 </layout>
               </object>
             </child>
+            <child>
+              <object class="ttk.Button" id="gen_button" named="True">
+                <property name="command" type="command" cbtype="simple">btn_gen</property>
+                <property name="text" translatable="yes">GEN</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">x</property>
+                  <property name="padx">10 0</property>
+                  <property name="side">left</property>
+                </layout>
+              </object>
+            </child>
           </object>
         </child>
         <child>

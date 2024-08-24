@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from utils import load_data, save_data, validate_lat_long, load_polygon_from_kml, is_point_in_polygon, USERS_FILE, DATA_FILE, PHOTOS_DIR, MAX_IMAGE_SIZE, CATEGORY_FILE
-import base64, os, time
+import base64, os, time, random
 from werkzeug.utils import secure_filename
 import app
 from datetime import datetime
@@ -12,7 +12,7 @@ upload_bp = Blueprint('upload', __name__)
 @upload_bp.route('/upload', methods=['POST'])
 def upload():
     content = request.json
-    user_id = content.get('Id')
+    user_id = content.get('UserId')
     opis = content.get('Message')
     zdjecie_base64 = content.get('Base64Image')
     latitude = content.get('Latitude')
@@ -104,9 +104,13 @@ def upload():
         app.logger.error(f"Błąd przy zapisywaniu zdjęcia: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy zapisywaniu zdjęcia'}), 500
 
+    # Generowanie unikalnego id na podstawie czasu i losowej liczby
+    uid = f"{int(time.time())}{random.randint(1000, 9999)}"
+
     # Dodanie nowych danych
     new_entry = {
-        'id': user_id,
+        'id': uid,
+        'user_id': user_id,
         'data': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'opis': opis,
         'zdjecie': zdjecie_filename,
@@ -123,4 +127,4 @@ def upload():
         app.logger.error(f"Błąd przy zapisywaniu danych: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy zapisywaniu danych'}), 500
 
-    return jsonify({'message': 'Dane zapisane pomyślnie', 'id': user_id}), 200
+    return jsonify({'message': 'Dane zapisane pomyślnie', 'id': uid}), 200
