@@ -6,7 +6,7 @@ echo "Zatrzymanie serwera klepak..."
 systemctl stop klepak
 
 tar -czf $BACKUP_DIR/klepak_r_$(date +%Y%m%d_%H%M%S).tgz -C $BACKUP_WORK_DIR klepak
-echo "Backup utworzony: /srv/backup/klepak_r_$(date +%Y%m%d_%H%M%S).tgz"
+echo "Backup utworzony: klepak_r_$(date +%Y%m%d_%H%M%S).tgz"
 
 echo "Usuwanie plików i folderów z katalogu $TARGET_DIR, z wyjątkami..."
 mkdir /tmp/empty_dir
