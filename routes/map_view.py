@@ -40,10 +40,10 @@ def map_view():
         }
     """).add_to(map_)
 
-    #data = load_data(DATA_FILE)
-    #kategorie = load_data(CATEGORY_FILE)
+    data = load_data(DATA_FILE)
+    kategorie = load_data(CATEGORY_FILE)
     for entry in data:
-        kat_id = entry['kategoria']
+        kat_id = int(entry['kategoria'])
 
         # Znalezienie kategorii na podstawie kat_id
         category = next((category for category in kategorie if category['id'] == kat_id), None)
