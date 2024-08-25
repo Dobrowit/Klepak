@@ -127,4 +127,5 @@ def upload():
         app.logger.error(f"Błąd przy zapisywaniu danych: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy zapisywaniu danych'}), 500
 
+    app.logger.error(f"Dane zapisane pomyślnie id: {uid}")
     return jsonify({'message': 'Dane zapisane pomyślnie', 'id': uid}), 200

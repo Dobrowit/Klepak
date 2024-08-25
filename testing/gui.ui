@@ -43,15 +43,26 @@
           </object>
         </child>
         <child>
-          <object class="tk.Text" id="json_text">
-            <property name="height">10</property>
-            <property name="width">50</property>
+          <object class="pygubu.builder.widgets.scrollbarhelper" id="scrollbarhelper2">
+            <property name="scrolltype">both</property>
+            <property name="usemousewheel">false</property>
             <layout manager="pack">
               <property name="expand">true</property>
               <property name="fill">both</property>
-              <property name="pady">0 20</property>
               <property name="side">top</property>
             </layout>
+            <child>
+              <object class="tk.Text" id="json_text">
+                <property name="height">10</property>
+                <property name="width">50</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">both</property>
+                  <property name="pady">0 20</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
           </object>
         </child>
         <child>
@@ -110,14 +121,25 @@
           </object>
         </child>
         <child>
-          <object class="tk.Text" id="response_text">
-            <property name="height">10</property>
-            <property name="width">50</property>
+          <object class="pygubu.builder.widgets.scrollbarhelper" id="scrollbarhelper1">
+            <property name="scrolltype">both</property>
+            <property name="usemousewheel">false</property>
             <layout manager="pack">
               <property name="expand">true</property>
               <property name="fill">both</property>
               <property name="side">top</property>
             </layout>
+            <child>
+              <object class="tk.Text" id="response_text">
+                <property name="height">5</property>
+                <property name="width">50</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">both</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
           </object>
         </child>
       </object>

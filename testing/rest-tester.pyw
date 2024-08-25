@@ -14,8 +14,8 @@ def generate_data():
     category = random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99, 444,])
     user = random.choice(["d4fb8586-101f-4dff-a91e-2488b8214ba3", "9389f8dd-18f8-444a-8dd7-4c815f349a6f", "", "uhbubuy7689"])
     message = random.choice(["","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut consectetur est. In dictum egestas erat vel convallis. Curabitur vestibulum dui a dui faucibus, eget egestas est consequat. Praesent auctor purus et pharetra porttitor. Curabitur sed consectetur ante. Donec tincidunt aliquet euismod. Morbi tristique pellentesque ipsum, eu faucibus nunc pharetra vel. Integer cursus iaculis felis eu tempor. Phasellus et fringilla lectus, et convallis tortor. Integer et dictum tortor. Nam malesuada erat lorem, at accumsan quam blandit vitae."])
-    latitude = random.uniform(49.0020432310001, 54.836416667)
-    longitude = random.uniform(14.1228848600001, 24.1457830750001)
+    latitude = random.uniform(54.74, 54.77)
+    longitude = random.uniform(17.53, 17.57)
     
     # Tworzenie słownika
     data = {
