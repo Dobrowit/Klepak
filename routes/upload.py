@@ -11,7 +11,9 @@ upload_bp = Blueprint('upload', __name__)
 
 @upload_bp.route('/upload', methods=['POST'])
 def upload():
-    content = request.json
+    #content = request.json
+    content = request.get_json()
+
     user_id = content.get('UserId')
     opis = content.get('Message')
     zdjecie_base64 = content.get('Base64Image')
@@ -19,15 +21,13 @@ def upload():
     longitude = content.get('Longitude')
     kategoria = content.get('Category')
 
-    if not user_id:
-        return jsonify({'error': 'Brak ID użytkownika'}), 400
-    
+    if not all([user_id, opis, zdjecie_base64, latitude, longitude, kategoria]):
+        return jsonify({'error': 'Błąd pliku JSON - niekompletność!'}), 400
+
+    # Walidacja wsp. geo.
     if not validate_lat_long(latitude, longitude):
-        return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne.'}), 400
-
-    if not all([zdjecie_base64, latitude, longitude, kategoria]):
-        return jsonify({'error': 'Brakuje zdjecie, latitude, longitude lub kategoria'}), 400
-
+        return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne!'}), 400
+    
     # Limit długości opisu
     if len(opis) > 5000:  # przykładowy limit 1000 znaków
         return jsonify({'error': 'Opis jest zbyt długi (max 5000 znaków)'}), 400
