@@ -29,7 +29,7 @@ def upload():
         return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne!'}), 400
     
     # Limit długości opisu
-    if len(opis) > 5000:  # przykładowy limit 1000 znaków
+    if len(opis) > 5000:
         return jsonify({'error': 'Opis jest zbyt długi (max 5000 znaków)'}), 400
 
     # Jeśli kategoria = 99 (inne) to wymagany jest opis
