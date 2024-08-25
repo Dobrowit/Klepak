@@ -6,7 +6,7 @@ import tkinter as tk
 import pygubu
 
 PROJECT_PATH = pathlib.Path(__file__).parent
-PROJECT_UI = PROJECT_PATH / "gui.ui"
+PROJECT_UI = PROJECT_PATH / "tester.ui"
 RESOURCE_PATHS = [PROJECT_PATH]
 
 def generate_data():
