@@ -24,6 +24,15 @@ def upload():
     if not all([user_id, zdjecie_base64, latitude, longitude, kategoria]):
         return jsonify({'error': 'Błąd pliku JSON - niekompletność!'}), 400
 
+    if not isinstance(kategoria, float):
+        return jsonify({"error": "Identyfikator kategorii powinien być liczbą!"}), 400
+
+    if not isinstance(latitude, float):
+        return jsonify({"error": "Współrzędne powinny być liczbami!"}), 400
+    
+    if not isinstance(longitude, float):
+        return jsonify({"error": "Współrzędne powinny być liczbami!"}), 400
+    
     # Walidacja wsp. geo.
     if not validate_lat_long(latitude, longitude):
         return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne!'}), 400
