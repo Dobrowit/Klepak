@@ -9,6 +9,7 @@ PROJECT_PATH = pathlib.Path(__file__).parent
 PROJECT_UI = PROJECT_PATH / "tester.ui"
 RESOURCE_PATHS = [PROJECT_PATH]
 DATAOK = 1
+LOOP = 1000
 
 def generate_data():
     # Generowanie losowych danych
@@ -48,6 +49,12 @@ class AppUI:
 
     def run(self):
         self.mainwindow.mainloop()
+
+    def btn_genpost(self):
+        for i in range(LOOP):
+            self.btn_gen()
+            self.btn_post()
+            print(f"{i}/{LOOP}")
 
     def btn_gen(self):
         data = generate_data()
