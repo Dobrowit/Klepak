@@ -125,7 +125,7 @@
             <child>
               <object class="ttk.Button" id="genpost_button" named="True">
                 <property name="command" type="command" cbtype="simple">btn_genpost</property>
-                <property name="text" translatable="yes">GET-POST</property>
+                <property name="text" translatable="yes">GET-POST many times</property>
                 <layout manager="pack">
                   <property name="expand">true</property>
                   <property name="fill">x</property>
