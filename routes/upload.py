@@ -21,7 +21,7 @@ def upload():
     longitude = content.get('Longitude')
     kategoria = content.get('Category')
 
-    if not all([user_id, opis, zdjecie_base64, latitude, longitude, kategoria]):
+    if not all([user_id, zdjecie_base64, latitude, longitude, kategoria]):
         return jsonify({'error': 'Błąd pliku JSON - niekompletność!'}), 400
 
     # Walidacja wsp. geo.
