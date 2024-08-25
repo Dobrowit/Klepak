@@ -24,7 +24,7 @@ def upload():
     if not all([user_id, zdjecie_base64, latitude, longitude, kategoria]):
         return jsonify({'error': 'Błąd pliku JSON - niekompletność!'}), 400
 
-    if not isinstance(kategoria, float):
+    if not isinstance(kategoria, int):
         return jsonify({"error": "Identyfikator kategorii powinien być liczbą!"}), 400
 
     if not isinstance(latitude, float):
