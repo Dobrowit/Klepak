@@ -1,0 +1,20 @@
+{
+    "name": "Klepak",
+    "short_name": "klepak",
+    "start_url": "/map",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#09a76d",
+    "icons": [
+      {
+        "src": "/static/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/static/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }

@@ -21,10 +21,21 @@
                 padding: 0; /* Usuwa padding */
             }
         </style>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#000000">
     </head>
     <body>
         <div id="map-container">
             {{ map_html|safe }}
         </div>
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/service-worker.js')
+                        .then((reg) => console.log('Service worker registered.', reg.scope))
+                        .catch((err) => console.log('Service worker registration failed:', err));
+                });
+            }
+        </script>
     </body>
 </html>

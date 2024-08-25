@@ -75,6 +75,15 @@ def block_non_polish_ips():
         app.logger.warning(f"Nieznany adres IP: {request.remote_addr}. Blokowanie połączenia.")
         utils.ip_blocks_unknown += 1
         raise Forbidden(description="Dostęp zabroniony: nieznany adres IP.")
+
+# Manifest PWA
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory('static', 'manifest.json')
+
+@app.route('/service-worker.js')
+def service_worker():
+    return send_from_directory('', 'service-worker.js')
     
 if __name__ == '__main__':
     app.run(debug=True, port=20162)
