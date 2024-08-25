@@ -45,14 +45,14 @@ def upload():
         if not is_within_polygon:
             return jsonify({'error': 'Punkt znajduje się poza obsługiwanym obszarem!'}), 400
     else:
-        app.logger.error(f"Nie udało się załadować wielokąta z pliku KML.")
+        app.app.logger.error(f"Nie udało się załadować wielokąta z pliku KML.")
         return jsonify({'error': 'Błąd serwera przy sprawdzaniu strefy!'}), 500
 
     # Wczytanie kategorii
     try:
         kategorie = load_data(CATEGORY_FILE)
     except IOError as e:
-        app.logger.error(f"Błąd przy wczytywaniu danych kategorii: {str(e)}")
+        app.app.logger.error(f"Błąd przy wczytywaniu danych kategorii: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy uploadzie'}), 500
     
     # Sprawdzenie, czy podana kat. jest zarejestrowane
@@ -63,7 +63,7 @@ def upload():
     try:
         users = load_data(USERS_FILE)
     except IOError as e:
-        app.logger.error(f"Błąd przy wczytywaniu danych użytkowników: {str(e)}")
+        app.app.logger.error(f"Błąd przy wczytywaniu danych użytkowników: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy uploadzie'}), 500
 
     # Sprawdzenie, czy ID jest zarejestrowane
@@ -74,7 +74,7 @@ def upload():
     try:
         existing_data = load_data(DATA_FILE)
     except IOError as e:
-        app.logger.error(f"Błąd przy wczytywaniu istniejących danych: {str(e)}")
+        app.app.logger.error(f"Błąd przy wczytywaniu istniejących danych: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy uploadzie'}), 500
     
     # Dekodowanie zdjęcia
@@ -101,7 +101,7 @@ def upload():
         with open(zdjecie_path, 'wb') as zdjecie_file:
             zdjecie_file.write(zdjecie_bytes)
     except IOError as e:
-        app.logger.error(f"Błąd przy zapisywaniu zdjęcia: {str(e)}")
+        app.app.logger.error(f"Błąd przy zapisywaniu zdjęcia: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy zapisywaniu zdjęcia'}), 500
 
     # Generowanie unikalnego id na podstawie czasu i losowej liczby
@@ -124,8 +124,8 @@ def upload():
     try:
         save_data(DATA_FILE, existing_data)
     except IOError as e:
-        app.logger.error(f"Błąd przy zapisywaniu danych: {str(e)}")
+        app.app.logger.error(f"Błąd przy zapisywaniu danych: {str(e)}")
         return jsonify({'error': 'Błąd serwera przy zapisywaniu danych'}), 500
 
-    app.logger.error(f"Dane zapisane pomyślnie id: {uid}")
+    app.app.logger.error(f"Dane zapisane pomyślnie id: {uid}")
     return jsonify({'message': 'Dane zapisane pomyślnie', 'id': uid}), 200
