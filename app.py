@@ -4,7 +4,7 @@ import time
 import geoip2.database
 from logging.handlers import RotatingFileHandler
 from werkzeug.exceptions import Forbidden
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from utils import DATA_DIR, GEOIP_DATABASE, EXEMPT_IPS
 import utils
 
