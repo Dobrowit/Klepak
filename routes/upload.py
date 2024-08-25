@@ -35,7 +35,7 @@ def upload():
     # Jeśli kategoria = 99 (inne) to wymagany jest opis
     if kategoria == 99:
         if len(opis) < 30:
-            return jsonify({'error': 'Wybrałeś kategorię "inne" więc musisz podać opis (min 30 znaków)'}), 400
+            return jsonify({'error': 'Wybrałeś kategorię Inne więc musisz podać opis (min 30 znaków)'}), 400
 
     # Sprawdzanie czy jest w strefie
     polygon = load_polygon_from_kml()
