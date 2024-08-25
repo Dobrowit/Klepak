@@ -1,9 +1,9 @@
-data/
 __pycache__/
-venv/
+.vscode/
 .venv/
 logs/
 *.log
 *.log.*
 *.pyc
-.vscode/
+data/
+!data/category.json
