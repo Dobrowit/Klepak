@@ -5,7 +5,7 @@ import folium
 item_view_bp = Blueprint('item_view', __name__)
 
 @item_view_bp.route('/item', methods=['GET'])
-def map_view():
+def item_view():
     entry_id = request.args.get('id')
     data = load_data(DATA_FILE)
     kategorie = load_data(CATEGORY_FILE)
