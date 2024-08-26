@@ -17,6 +17,7 @@ def item_view():
     else:
         data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
 
+    print(data)
     kat_id = data['kategoria']
 
     # Znalezienie kategorii na podstawie kat_id
