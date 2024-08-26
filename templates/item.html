@@ -100,7 +100,7 @@
     <div class="container">
         <!-- Zdjęcie -->
         <div class="photo">
-            <img src="{{ url_for('static', filename='photos/' + entry['zdjecie']) }}" alt="Zdjęcie">
+            {{ img_html|safe }}
         </div>
 
         <!-- Mapa -->
