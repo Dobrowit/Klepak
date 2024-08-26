@@ -76,7 +76,7 @@ def block_non_polish_ips():
         utils.ip_blocks_unknown += 1
         raise Forbidden(description="Dostęp zabroniony: nieznany adres IP.")
 
-# Manifest PWA
+# Manifest PWA - SPRAWDZIĆ CZY DZIAŁA!!!!
 @app.route('/manifest.json')
 def manifest():
     return send_from_directory('static', 'manifest.json')
