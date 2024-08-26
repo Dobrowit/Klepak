@@ -13,6 +13,6 @@ def get_data():
         if not data:
             return jsonify({'error': 'Nie znaleziono danych dla podanego ID'}), 404
     else:
-        data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
+        data = [{k: v for k, v in entry.items() if k not in ['latitude', 'longitude', 'user_id']} for entry in data]
 
     return jsonify(data), 200
