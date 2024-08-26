@@ -43,7 +43,7 @@ def item_view():
 
     item_ = f"""
 <div>
-    <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:100%; max-height:400px;">
+    <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}">
     <h1>{nazwa_kat}</h1>
     <p>{entry['data']}</p>
     <hr style="border: 3px solid black; margin: 0;">
