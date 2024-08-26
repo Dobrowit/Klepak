@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, url_for, jsonify
 from utils import load_data, DATA_FILE, CATEGORY_FILE
 import folium
 
-item_view_bp = Blueprint('map_view', __name__)
+item_view_bp = Blueprint('item_view', __name__)
 
 @item_view_bp.route('/item', methods=['GET'])
 def map_view():
