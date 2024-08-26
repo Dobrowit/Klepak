@@ -76,7 +76,12 @@
                     dataSrc: ''
                 },
                 columns: [
-                    { data: 'id' },
+                    {
+                        data: 'id',
+                        render: function(data) {
+                            return `<a href="/item?id=${data}" target="_blank" class="id-link">${data}</a>`;
+                        }
+                    },
                     { data: 'data' },
                     { data: 'opis' },
                     {
