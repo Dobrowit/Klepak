@@ -16,6 +16,7 @@ from routes.map_view import map_view_bp
 from routes.table_view import table_view_bp
 from routes.help_view import help_view_bp
 from routes.categories import categories_bp
+from routes.item_view import item_view_bp
 
 app = Flask(__name__)
 
@@ -27,6 +28,7 @@ app.register_blueprint(map_view_bp)
 app.register_blueprint(table_view_bp)
 app.register_blueprint(help_view_bp)
 app.register_blueprint(categories_bp)
+app.register_blueprint(item_view_bp)
 
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
