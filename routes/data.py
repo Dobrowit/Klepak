@@ -3,13 +3,13 @@ from utils import load_data, DATA_FILE
 
 data_bp = Blueprint('data', __name__)
 
-@data_bp.route('/data', methods=['POST'])
+@data_bp.route('/data', methods=['GET'])
 def get_data():
     entry_id = request.args.get('id')
     data = load_data(DATA_FILE)
 
     if entry_id:
-        data = [entry for entry in data if entry['id'] == entry_id]
+        data = [entry for entry in data if str(entry['id']) == str(entry_id)]
         if not data:
             return jsonify({'error': 'Nie znaleziono danych dla podanego ID'}), 404
     else:
