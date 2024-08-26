@@ -84,6 +84,10 @@ def manifest():
 @app.route('/service-worker.js')
 def service_worker():
     return send_from_directory('', 'service-worker.js')
+
+@app.route('/favicon.ico')
+def manifest():
+    return send_from_directory('static', 'favicon.ico')
     
 if __name__ == '__main__':
     app.run(debug=True, port=20162)
