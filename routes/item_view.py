@@ -29,10 +29,11 @@ def item_view():
     # Utworzenie mapy
     map_ = folium.Map(location=[entry['latitude'], entry['longitude']],
                       zoom_start=19,
-                      dragging=False,  # Wyłączenie przesuwania mapy
-                      scrollWheelZoom=False,  # Wyłączenie zoomowania przez scrollowanie
-                      touchZoom=False,  # Wyłączenie zoomowania na urządzeniach dotykowych
-                      doubleClickZoom=False  # Wyłączenie zoomowania przez podwójne kliknięcie
+                      dragging=False,
+                      scrollWheelZoom=False,
+                      touchZoom=False,
+                      doubleClickZoom=False,
+                      control_scale=False
                       )
     folium.Marker(
         location = [entry['latitude'], entry['longitude']],
