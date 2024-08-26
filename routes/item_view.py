@@ -41,7 +41,7 @@ def item_view():
     <p>{entry['data']}</p>
     <hr style="border: 3px solid black; margin: 0;">
     <p>{entry['opis']}</p>
-    <p>{Id: entry['id']}</p>
+    <p>Id: {entry_id}</p>
 </div>
 """
 
