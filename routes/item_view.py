@@ -33,7 +33,8 @@ def item_view():
                       scrollWheelZoom=False,
                       touchZoom=False,
                       doubleClickZoom=False,
-                      control_scale=False
+                      control_scale=False,
+                      zoom_control=False
                       )
     folium.Marker(
         location = [entry['latitude'], entry['longitude']],
