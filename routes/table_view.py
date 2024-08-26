@@ -1,22 +1,19 @@
-from flask import Blueprint, render_template, url_for
-import pandas as pd
+from flask import Blueprint, jsonify
 from utils import load_data, DATA_FILE
 
-table_view_bp = Blueprint('table_view', __name__)
+item_view_bp = Blueprint('item_view', __name__)
 
-@table_view_bp.route('/table', methods=['GET'])
-def table_view():
+@item_view_bp.route('/data', methods=['GET'])
+def get_data():
     data = load_data(DATA_FILE)
-    df = pd.DataFrame(data)
-    
-    # Funkcja do tworzenia linku HTML
-    def make_clickable(val):
-        return f'<a href="{url_for("static", filename="photos/" + val)}" target="_blank">{val}</a>'
-    
-    # Zastosuj funkcję make_clickable do kolumny 'zdjecie'
-    df['zdjecie'] = df['zdjecie'].apply(make_clickable)
-    
-    # Konwertuj DataFrame na HTML z escape=False, aby zachować tagi HTML
-    table_html = df.to_html(classes='table table-striped table-bordered', index=False, escape=False)
-    
-    return render_template('table.html', table_html=table_html)
+    # Filtracja danych i usunięcie niepotrzebnych kolumn
+    filtered_data = [
+        {
+            'id': entry['id'],
+            'data': entry['data'],
+            'opis': entry['opis'],
+            'zdjecie': entry['zdjecie']
+        }
+        for entry in data
+    ]
+    return jsonify(filtered_data)
