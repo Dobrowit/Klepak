@@ -12,8 +12,8 @@ def get_categories():
         data = [entry for entry in data if entry['id'] == entry_id]
         if not data:
             return jsonify({'error': 'Nie znaleziono danych dla podanego ID'}), 404
-    else:
-        data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
+    #else:
+    #    data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
 
     return jsonify(data), 200
 
