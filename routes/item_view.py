@@ -44,4 +44,6 @@ def item_view():
     <p>{Id: entry['id']}</p>
 </div>
 """
-    return render_template('item.html', item_html=item_)
+
+    map_html = map_._repr_html_()    
+    return render_template('item.html', item_html=item_, map_html=map_html)
