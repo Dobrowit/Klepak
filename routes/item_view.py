@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, url_for
+from flask import Blueprint, request, render_template, url_for, jsonify
 from utils import load_data, DATA_FILE, CATEGORY_FILE
 import folium
 
@@ -38,7 +38,7 @@ def map_view():
 </div>
 """
     folium.Marker(
-        location = [entry['latitude'], entry['longitude']],
+        location = [data['latitude'], data['longitude']],
         icon = folium.Icon(color = 'red',
                             icon = icon_symbol,
                             prefix = 'fa')).add_to(map_)
