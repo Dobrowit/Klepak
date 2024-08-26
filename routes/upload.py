@@ -11,7 +11,9 @@ upload_bp = Blueprint('upload', __name__)
 
 @upload_bp.route('/upload', methods=['POST'])
 def upload():
-    content = request.json
+    #content = request.json
+    content = request.get_json()
+
     user_id = content.get('UserId')
     opis = content.get('Message')
     zdjecie_base64 = content.get('Base64Image')
@@ -19,23 +21,30 @@ def upload():
     longitude = content.get('Longitude')
     kategoria = content.get('Category')
 
-    if not user_id:
-        return jsonify({'error': 'Brak ID użytkownika'}), 400
+    if not all([user_id, zdjecie_base64, latitude, longitude, kategoria]):
+        return jsonify({'error': 'Błąd pliku JSON - niekompletność!'}), 400
+
+    if not isinstance(kategoria, int):
+        return jsonify({"error": "Identyfikator kategorii powinien być liczbą!"}), 400
+
+    if not isinstance(latitude, float):
+        return jsonify({"error": "Współrzędne powinny być liczbami!"}), 400
     
+    if not isinstance(longitude, float):
+        return jsonify({"error": "Współrzędne powinny być liczbami!"}), 400
+    
+    # Walidacja wsp. geo.
     if not validate_lat_long(latitude, longitude):
-        return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne.'}), 400
-
-    if not all([zdjecie_base64, latitude, longitude, kategoria]):
-        return jsonify({'error': 'Brakuje zdjecie, latitude, longitude lub kategoria'}), 400
-
+        return jsonify({'error': 'Nieprawidłowe współrzędne geograficzne!'}), 400
+    
     # Limit długości opisu
-    if len(opis) > 5000:  # przykładowy limit 1000 znaków
+    if len(opis) > 5000:
         return jsonify({'error': 'Opis jest zbyt długi (max 5000 znaków)'}), 400
 
     # Jeśli kategoria = 99 (inne) to wymagany jest opis
     if kategoria == 99:
         if len(opis) < 30:
-            return jsonify({'error': 'Wybrałeś kategorię "inne" więc musisz podać opis (min 30 znaków)'}), 400
+            return jsonify({'error': 'Wybrałeś kategorię Inne więc musisz podać opis (min 30 znaków)'}), 400
 
     # Sprawdzanie czy jest w strefie
     polygon = load_polygon_from_kml()

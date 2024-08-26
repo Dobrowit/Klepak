@@ -113,6 +113,29 @@
           </object>
         </child>
         <child>
+          <object class="ttk.Frame" id="frame2">
+            <property name="height">200</property>
+            <property name="width">200</property>
+            <layout manager="pack">
+              <property name="expand">false</property>
+              <property name="fill">x</property>
+              <property name="pady">0 20</property>
+              <property name="side">top</property>
+            </layout>
+            <child>
+              <object class="ttk.Button" id="genpost_button" named="True">
+                <property name="command" type="command" cbtype="simple">btn_genpost</property>
+                <property name="text" translatable="yes">GET-POST many times</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">x</property>
+                  <property name="side">left</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
           <object class="ttk.Label" id="response_label">
             <property name="text" translatable="yes">Response:</property>
             <layout manager="pack">
