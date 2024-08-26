@@ -17,6 +17,6 @@ def table_view():
     df['zdjecie'] = df['zdjecie'].apply(make_clickable)
     
     # Konwertuj DataFrame na HTML z escape=False, aby zachować tagi HTML
-    table_html = df.to_html(classes='table table-striped', index=False, escape=False)
+    table_html = df.to_html(classes='table table-striped table-bordered', index=False, escape=False)
     
     return render_template('table.html', table_html=table_html)

@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela danych</title>
-    <!-- Link do stylów DataTables -->
+    <!-- Linki do stylów DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- Link do Bootstrap (opcjonalnie, dla lepszej stylistyki) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,16 +17,6 @@
         table {
             width: 100%;
             border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f4f4f4;
         }
 
         /* Styl dla tabeli na druk */
@@ -44,50 +36,28 @@
 </head>
 <body>
     <h1>Dane w tabeli</h1>
-    <table id="dataTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Data</th>
-                <th>Opis</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Wiersze tabeli będą wstawiane dynamicznie przez JavaScript -->
-        </tbody>
-    </table>
+    <div class="container">
+        <table id="dataTable">
+            <!-- Tabela zostanie wstawiona dynamicznie przez JavaScript -->
+            {{ table_html|safe }}
+        </table>
+    </div>
 
-    <!-- Linki do bibliotek jQuery i DataTables -->
+    <!-- Linki do jQuery i DataTables -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Link do Bootstrap (opcjonalnie) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Pobranie danych z endpointu
-            $.getJSON('/data', function(data) {
-                // Inicjalizacja tabeli
-                var table = $('#dataTable').DataTable({
-                    data: data,
-                    columns: [
-                        { data: 'id', title: 'ID' },
-                        { data: 'data', title: 'Data' },
-                        { data: 'opis', title: 'Opis' }
-                    ]
-                });
+            $('#dataTable').DataTable({
+                paging: true, // Włącz paginację
+                searching: true, // Włącz wyszukiwanie
+                ordering: true, // Włącz sortowanie
+                info: true, // Wyświetl informacje o tabeli
+                // Możesz dostosować inne opcje DataTables według potrzeb
             });
         });
     </script>
 </body>
 </html>
-
-
-
-<html>
-    <head>
-        <title>table_view - Zestawienie zgłoszeń</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    </head>
-    <body>
-        {{ table_html|safe }}
-    </body>
-</html>
-
