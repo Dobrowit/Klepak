@@ -17,8 +17,8 @@ def item_view():
     else:
         data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
 
-    print(data)
-    kat_id = data['kategoria']
+    entry = data[0]
+    kat_id = entry['kategoria']
 
     # Znalezienie kategorii na podstawie kat_id
     category = next((category for category in kategorie if category['id'] == kat_id), None)
@@ -31,15 +31,15 @@ def item_view():
 
     item_ = f"""
 <div>
-    <img src="{url_for('static', filename='photos/' + data['zdjecie'])}" style="max-width:300px; max-height:200px;">
+    <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:300px; max-height:200px;">
     <h1>{nazwa_kat}</h1>
-    <p>{data['data']}</p>
+    <p>{entry['data']}</p>
     <hr style="border: 3px solid black; margin: 0;">
-    <p>{data['opis']}</p>
+    <p>{entry['opis']}</p>
 </div>
 """
     folium.Marker(
-        location = [data['latitude'], data['longitude']],
+        location = [entry['latitude'], entry['longitude']],
         icon = folium.Icon(color = 'red',
                             icon = icon_symbol,
                             prefix = 'fa')).add_to(map_)
