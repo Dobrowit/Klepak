@@ -9,11 +9,18 @@ def get_categories():
     data = load_data(CATEGORY_FILE)
 
     if entry_id:
+        # Konwersja entry_id na int
+        try:
+            entry_id = int(entry_id)
+        except ValueError:
+            return jsonify({'error': 'Niepoprawny format ID'}), 400
+
         data = [entry for entry in data if entry['id'] == entry_id]
         if not data:
             return jsonify({'error': 'Nie znaleziono danych dla podanego ID'}), 404
-    #else:
-    #    data = [{k: v for k, v in entry.items() if k != 'id'} for entry in data]
+    # Jeśli brak parametru id, zwracamy wszystkie dane
+    else:
+        return jsonify(data), 200
 
     return jsonify(data), 200
 
