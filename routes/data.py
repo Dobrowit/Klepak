@@ -3,7 +3,7 @@ from utils import load_data, DATA_FILE
 
 data_bp = Blueprint('data', __name__)
 
-@data_bp.route('/data', methods=['GET'])
+@data_bp.route('/data', methods=['POST'])
 def get_data():
     entry_id = request.args.get('id')
     data = load_data(DATA_FILE)
