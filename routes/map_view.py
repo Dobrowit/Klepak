@@ -54,7 +54,7 @@ def map_view():
         popup_content = f"""
 <div>
     <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}" style="max-width:300px; max-height:200px;">
-    <h1><a href="https://klepak.cytr.us/item?id={entry['id']}">{nazwa_kat}</a></h1>
+    <h1><a href="https://klepak.cytr.us/item?id={entry['id']}" target="_blank">{nazwa_kat}</a></h1>
     <p>{entry['data']}</p>
     <hr style="border: 3px solid black; margin: 0;">
     <p>{entry['opis']}</p>
