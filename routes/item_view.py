@@ -27,7 +27,12 @@ def item_view():
         icon_symbol = category['ikona']
 
     # Utworzenie mapy
-    map_ = folium.Map(location=[entry['latitude'], entry['longitude']], zoom_start=19)
+    map_ = folium.Map(location=[entry['latitude'], entry['longitude']],
+                      zoom_start=19,
+                      dragging=False,  # Wyłączenie przesuwania mapy
+                      scrollWheelZoom=False,  # Wyłączenie zoomowania przez scrollowanie
+                      touchZoom=False,  # Wyłączenie zoomowania na urządzeniach dotykowych
+                      doubleClickZoom=False  # Wyłączenie zoomowania przez podwójne kliknięcie)
     folium.Marker(
         location = [entry['latitude'], entry['longitude']],
         icon = folium.Icon(color = 'red',
