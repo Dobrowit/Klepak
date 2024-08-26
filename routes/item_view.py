@@ -32,7 +32,8 @@ def item_view():
                       dragging=False,  # Wyłączenie przesuwania mapy
                       scrollWheelZoom=False,  # Wyłączenie zoomowania przez scrollowanie
                       touchZoom=False,  # Wyłączenie zoomowania na urządzeniach dotykowych
-                      doubleClickZoom=False  # Wyłączenie zoomowania przez podwójne kliknięcie)
+                      doubleClickZoom=False  # Wyłączenie zoomowania przez podwójne kliknięcie
+                      )
     folium.Marker(
         location = [entry['latitude'], entry['longitude']],
         icon = folium.Icon(color = 'red',
