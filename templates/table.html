@@ -39,6 +39,7 @@
                     <th>Data</th>
                     <th>Opis</th>
                     <th>Zdjęcie</th>
+                    <th>Kategoria</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,7 +89,8 @@
                         render: function(data) {
                             return `<img width="50%" src="${window.location.origin}/static/photos/${data}" class="thumbnail" data-large="${window.location.origin}/static/photos/${data}">`;
                         }
-                    }
+                    },
+                    { data: 'nazwa_kat' }
                 ],
                 paging: true,
                 searching: true,
