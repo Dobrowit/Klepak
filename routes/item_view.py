@@ -28,6 +28,11 @@ def item_view():
 
     # Utworzenie mapy
     map_ = folium.Map(location=[54.7578, 17.5610], zoom_start=15)
+    folium.Marker(
+        location = [entry['latitude'], entry['longitude']],
+        icon = folium.Icon(color = 'red',
+                            icon = icon_symbol,
+                            prefix = 'fa')).add_to(map_)
 
     item_ = f"""
 <div>
@@ -38,11 +43,4 @@ def item_view():
     <p>{entry['opis']}</p>
 </div>
 """
-    folium.Marker(
-        location = [entry['latitude'], entry['longitude']],
-        icon = folium.Icon(color = 'red',
-                            icon = icon_symbol,
-                            prefix = 'fa')).add_to(map_)
-
-    item_html = item_._repr_html_()
-    return render_template('item.html', item_html=item_html)
+    return render_template('item.html', item_html=item_)
