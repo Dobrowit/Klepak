@@ -57,7 +57,7 @@ def map_view():
     <h1><a href="https://klepak.cytr.us/item?id={entry['id']}" target="_blank">{nazwa_kat}</a></h1>
     <p>{entry['data']}</p>
     <hr style="border: 3px solid black; margin: 0;">
-    <p>{entry['opis']}</p>
+    <p style="font-size: small">{entry['opis']}</p>
 </div>
 """
         folium.Marker(
