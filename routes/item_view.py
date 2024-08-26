@@ -43,7 +43,6 @@ def item_view():
 
     item_ = f"""
 <div>
-    <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}">
     <h1>{nazwa_kat}</h1>
     <p>{entry['data']}</p>
     <hr style="border: 3px solid black; margin: 0;">
@@ -52,5 +51,9 @@ def item_view():
 </div>
 """
 
+    img_ = f"""
+    <img src="{url_for('static', filename='photos/' + entry['zdjecie'])}">
+"""
+    
     map_html = map_._repr_html_()    
-    return render_template('item.html', item_html=item_, map_html=map_html)
+    return render_template('item.html', item_html=item_, map_html=map_html, img_html=img_)
