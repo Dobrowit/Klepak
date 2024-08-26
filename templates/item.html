@@ -19,6 +19,9 @@
         <div id="map-container">
             {{ item_html|safe }}
         </div>
+        <div id="map">
+            {{ map_html|safe }}
+        </div>
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
