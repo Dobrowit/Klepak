@@ -17,6 +17,7 @@ from routes.table_view import table_view_bp
 from routes.help_view import help_view_bp
 from routes.categories import categories_bp
 from routes.item_view import item_view_bp
+from routes.main import main_bp
 
 app = Flask(__name__)
 
@@ -29,6 +30,7 @@ app.register_blueprint(table_view_bp)
 app.register_blueprint(help_view_bp)
 app.register_blueprint(categories_bp)
 app.register_blueprint(item_view_bp)
+app.register_blueprint(main_bp)
 
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
@@ -94,13 +96,6 @@ def favicon():
         path='favicon.ico',
         mimetype='image/vnd.microsoft.icon'
     )
-
-main_bp = Blueprint('main', __name__)
-app.register_blueprint(main_bp)
-
-@app.route('/')
-def home():
-    return redirect(url_for('map_view'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=20162)
