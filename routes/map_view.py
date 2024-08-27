@@ -3,7 +3,6 @@ from utils import load_data, DATA_FILE, CATEGORY_FILE
 import folium
 from folium.plugins import MarkerCluster
 from folium import IFrame
-from folium.plugins import FloatImage
 
 map_view_bp = Blueprint('map_view', __name__)
 
@@ -23,14 +22,14 @@ def map_view():
     # Utworzenie mapy
     map_ = folium.Map(location=[54.7578, 17.5610], zoom_start=15)
 
-    map_btn_ = '''
-        <a href="table" target="_blank" style="display: block; width: 100px; height: 40px; text-align: center; line-height: 40px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-            Kliknij mnie
-        </a>
-    '''
+
     # Dodanie przycisku do mapy
-    float_image = folium.FloatImage(map_btn_ , bottom=10, left=10)
-    map_.add_child(float_image)
+    html = '''
+    <div style="position: absolute; top: 10px; right: 10px; background-color: #007bff; color: white; padding: 10px; border-radius: 5px;">
+        <a href="https://example.com" target="_blank" style="color: white; text-decoration: none;">Kliknij mnie</a>
+    </div>
+    '''
+    map_.get_root().html.add_child(folium.Element(html))
 
     # Ikonka full-screen
     folium.plugins.Fullscreen(
