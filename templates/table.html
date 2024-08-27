@@ -92,6 +92,7 @@
                             return `<a href="/item?id=${data}" target="_blank" class="id-link">${data}</a>`;
                         }
                     },
+                    { data: 'nazwa_kat' },
                     { data: 'data' },
                     { data: 'opis' },
                     {
@@ -99,8 +100,7 @@
                         render: function(data) {
                             return `<img width="50%" src="${window.location.origin}/static/photos/${data}" class="thumbnail" data-large="${window.location.origin}/static/photos/${data}">`;
                         }
-                    },
-                    { data: 'nazwa_kat' }
+                    }
                 ],
                 paging: true,
                 searching: true,
