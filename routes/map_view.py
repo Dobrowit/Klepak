@@ -21,6 +21,16 @@ def map_view():
     # Utworzenie mapy
     map_ = folium.Map(location=[54.7578, 17.5610], zoom_start=15)
 
+    map_btn_ = '''
+        <a href="table" target="_blank" style="display: block; width: 100px; height: 40px; text-align: center; line-height: 40px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+            Kliknij mnie
+        </a>
+    '''
+    # Dodanie przycisku do mapy
+    custom_pane = folium.TileLayer(name='Custom Pane', control=False)
+    map_.add_child(custom_pane)
+    map_.get_root().html.add_child(folium.Element(map_btn_))
+
     # Ikonka full-screen
     folium.plugins.Fullscreen(
         position="topright",
