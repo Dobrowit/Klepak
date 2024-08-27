@@ -4,7 +4,7 @@ import time
 import geoip2.database
 from logging.handlers import RotatingFileHandler
 from werkzeug.exceptions import Forbidden
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, redirect, url_for
 from utils import DATA_DIR, GEOIP_DATABASE, EXEMPT_IPS
 import utils
 
@@ -94,6 +94,10 @@ def favicon():
         path='favicon.ico',
         mimetype='image/vnd.microsoft.icon'
     )
+
+@app.route('/')
+def home():
+    return redirect(url_for('map_view'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=20162)
