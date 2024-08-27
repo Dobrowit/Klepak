@@ -95,6 +95,9 @@ def favicon():
         mimetype='image/vnd.microsoft.icon'
     )
 
+main_bp = Blueprint('main', __name__)
+app.register_blueprint(main_bp)
+
 @app.route('/')
 def home():
     return redirect(url_for('map_view'))
