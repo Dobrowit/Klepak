@@ -27,10 +27,6 @@ def map_view():
         </a>
     '''
     # Dodanie przycisku do mapy
-    custom_pane = folium.TileLayer(name='Custom Pane', control=False)
-    map_.add_child(custom_pane)
-    map_.get_root().html.add_child(folium.Element(map_btn_))
-
     float_image = folium.FloatImage(map_btn_ , bottom=10, left=10)
     map_.add_child(float_image)
 
