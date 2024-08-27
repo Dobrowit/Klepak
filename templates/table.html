@@ -17,6 +17,16 @@
             cursor: pointer;
             border: 1px solid #ddd;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto; /* lub fixed, jeśli chcesz kontrolować szerokość kolumn */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
         @media print {
             table {
                 width: 100%;
