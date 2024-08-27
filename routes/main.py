@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template, url_for
+from flask import Blueprint, url_for, redirect
 import pandas as pd
-from utils import load_data, DATA_FILE, CATEGORY_FILE
 
 main_bp = Blueprint('main', __name__)
 
