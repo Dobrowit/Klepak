@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source server-config
+# Uwaga na pełną ścieżkę!! Jeśli ustawienia nie załadują się to rsync wyjebie w powietrze cały serwer!
+source /srv/klepak/server-config
 
 echo "Zatrzymanie serwera klepak..."
 systemctl stop klepak
