@@ -31,6 +31,9 @@ def map_view():
     map_.add_child(custom_pane)
     map_.get_root().html.add_child(folium.Element(map_btn_))
 
+    float_image = folium.FloatImage(map_btn_ , bottom=10, left=10)
+    map_.add_child(float_image)
+
     # Ikonka full-screen
     folium.plugins.Fullscreen(
         position="topright",
