@@ -2,6 +2,8 @@ from flask import Blueprint, request, render_template, url_for
 from utils import load_data, DATA_FILE, CATEGORY_FILE
 import folium
 from folium.plugins import MarkerCluster
+from folium import IFrame
+from folium.plugins import FloatImage
 
 map_view_bp = Blueprint('map_view', __name__)
 
