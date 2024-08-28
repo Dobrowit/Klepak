@@ -1,0 +1,3 @@
+- zmiana struktury categories.json
+- rozdzielenie andpointów z API pod /api/
+- implementacja kalendarza iCAL/JSON
