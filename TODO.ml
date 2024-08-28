@@ -1,3 +1,4 @@
-- zmiana struktury categories.json
-- rozdzielenie andpointów z API pod /api/
-- implementacja kalendarza iCAL/JSON
+- zmiana struktury categories.json (kategorie i podkategorie)
+- rozdzielenie endpointów z API pod /api/
+- implementacja kalendarza iCAL/JSON (imprezy, śmieci)
+- wysyłanie komunikatów
