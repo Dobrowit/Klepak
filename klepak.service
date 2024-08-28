@@ -5,8 +5,8 @@ Description=Serwer Klepak
 After=network.target
 
 [Service]
-User=dobrowit
-Group=dobrowit
+User=klepak
+Group=klepak
 WorkingDirectory=/srv/klepak
 ExecStart=/srv/klepak/server-start
 

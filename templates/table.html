@@ -41,15 +41,17 @@
     </style>
 </head>
 <body>
+    <a class="btn btn-primary" href="/map" role="button">Mapa zgłoszeń</a>
+    <a class="btn btn-danger" href="#" role="button">Zaloguj się</a>
     <div class="container">
         <table id="dataTable" class="display">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Data</th>
+                    <th>Kategoria</th>
                     <th>Opis</th>
                     <th>Zdjęcie</th>
-                    <th>Kategoria</th>
                 </tr>
             </thead>
             <tbody>
@@ -93,14 +95,14 @@
                         }
                     },
                     { data: 'data' },
+                    { data: 'nazwa_kat' },
                     { data: 'opis' },
                     {
                         data: 'zdjecie',
                         render: function(data) {
                             return `<img width="50%" src="${window.location.origin}/static/photos/${data}" class="thumbnail" data-large="${window.location.origin}/static/photos/${data}">`;
                         }
-                    },
-                    { data: 'nazwa_kat' }
+                    }
                 ],
                 paging: true,
                 searching: true,
