@@ -1,5 +1,6 @@
 #!/bin/bash
 
+timedatectl set-timezone Europe/Warsaw
 source server-config
 source ./.venv/bin/activate
 gunicorn --chdir $TARGET_DIR --workers $WORKERS --timeout $TIMEOUT --preload --bind 0.0.0.0:20162 app:app
