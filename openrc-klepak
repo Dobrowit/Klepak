@@ -1,6 +1,6 @@
 #!/sbin/openrc-run
 
-command="/usr/local/bin/klepak-start"
+command="/srv/klepak/openrc-klepak"
 command_args="start"
 pidfile="/run/klepak/klepak.pid"
 start_stop_daemon_args="--make-pidfile --background --chuid klepak:klepak --exec /srv/klepak/server-start"
