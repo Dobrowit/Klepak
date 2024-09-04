@@ -17,6 +17,9 @@ case "$OS" in
         apt update
         apt upgrade -y
         apt install calc python3-venv python3 pip -y
+        cp klepak.service /etc/systemd/system/klepak.service
+        systemctl daemon-reload
+        systemctl enable klepak.service
         ;;
     alpine)
         echo "System to Alpine Linux"
@@ -24,6 +27,11 @@ case "$OS" in
         apk update
         apk upgrade
         apk add mc htop ncdu python3 python-setuptools python3-dev
+        cp openrc-klepak /etc/init.d/klepak
+        rc-update add klepak default
+        rc-service klepak start
+        rc-update add klepak default
+        rc-service klepak status
         ;;
     *)
         echo "Niewspierana dystrybucja: $OS"
@@ -34,7 +42,3 @@ esac
 python3 -m venv .venv
 source ./.venv/bin/activate
 pip install -r requirements.txt
-
-cp klepak.service /etc/systemd/system/klepak.service
-systemctl daemon-reload
-systemctl enable klepak.service
