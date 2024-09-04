@@ -1,0 +1,27 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        echo "Starting Klepak server..."
+        start-stop-daemon --start --background --make-pidfile --pidfile /run/klepak/klepak.pid --chuid klepak:klepak --exec /srv/klepak/server-start
+        ;;
+    stop)
+        echo "Stopping Klepak server..."
+        start-stop-daemon --stop --pidfile /run/klepak/klepak.pid
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    status)
+        if [ -f /run/klepak/klepak.pid ]; then
+            echo "Klepak server is running"
+        else
+            echo "Klepak server is not running"
+        fi
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac
