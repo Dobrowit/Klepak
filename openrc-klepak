@@ -1,0 +1,39 @@
+#!/sbin/openrc-run
+
+command="/usr/local/bin/klepak-start"
+command_args="start"
+pidfile="/run/klepak/klepak.pid"
+start_stop_daemon_args="--make-pidfile --background --chuid klepak:klepak --exec /srv/klepak/server-start"
+
+depend() {
+    after network
+}
+
+start() {
+    ebegin "Starting Klepak server"
+    start-stop-daemon --start --pidfile ${pidfile} ${start_stop_daemon_args}
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping Klepak server"
+    start-stop-daemon --stop --pidfile ${pidfile}
+    eend $?
+}
+
+restart() {
+    ebegin "Restarting Klepak server"
+    start-stop-daemon --stop --pidfile ${pidfile}
+    start-stop-daemon --start --pidfile ${pidfile} ${start_stop_daemon_args}
+    eend $?
+}
+
+status() {
+    if [ -f ${pidfile} ]; then
+        ebegin "Klepak server is running"
+        eend 0
+    else
+        ebegin "Klepak server is not running"
+        eend 1
+    fi
+}
