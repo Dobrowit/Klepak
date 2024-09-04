@@ -44,6 +44,7 @@ pip install -r requirements.txt
 echo "Ustawienie uprawnień do plików..."
 chown -R dobrowit:dobrowit "$TARGET_DIR"
 chmod +x $TARGET_DIR/server-*
+chmod +x $TARGET_DIR/openrc-*
 
 echo "Operacje zakończone pomyślnie."
 
