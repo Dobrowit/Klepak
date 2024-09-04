@@ -1,8 +1,35 @@
 #!/bin/bash
 
-apt update
-apt upgrade -y
-apt install calc python3-venv python3 pip -y
+# Sprawdzenie dystrybucji Linux
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS=$ID
+else
+    echo "Nie można zidentyfikować systemu operacyjnego."
+    exit 1
+fi
+
+# Wykonanie poleceń w zależności od systemu
+case "$OS" in
+    ubuntu|debian)
+        echo "System to Ubuntu lub Debian"
+        # Wykonaj polecenia dla Ubuntu/Debian
+        apt update
+        apt upgrade -y
+        apt install calc python3-venv python3 pip -y
+        ;;
+    alpine)
+        echo "System to Alpine Linux"
+        # Wykonaj polecenia dla Alpine Linux
+        apk update
+        apk upgrade
+        apk add mc htop ncdu python3 python-setuptools python3-dev
+        ;;
+    *)
+        echo "Niewspierana dystrybucja: $OS"
+        exit 1
+        ;;
+esac
 
 python3 -m venv .venv
 source ./.venv/bin/activate
